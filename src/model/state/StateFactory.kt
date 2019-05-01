@@ -1,4 +1,4 @@
-package ai.state
+package model.state
 
 interface StateFactory {
     // TODO use enum insted of String?

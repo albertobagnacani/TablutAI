@@ -1,4 +1,4 @@
-package ai.state.board
+package model.state.board
 
 // TODO factory?
 interface NormalBoard<T> : Board<T> {

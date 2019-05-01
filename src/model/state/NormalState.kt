@@ -1,8 +1,8 @@
-package ai.state
+package model.state
 
-import ai.state.board.Board
-import ai.state.board.BoardCell
-import ai.state.player.Player
+import model.state.board.Board
+import model.state.board.BoardCell
+import model.state.player.Player
 
 class NormalState : State {
     override val board: Board<BoardCell>

@@ -1,4 +1,4 @@
-package ai.state.board
+package model.state.board
 
 /**
  * Class representing the board

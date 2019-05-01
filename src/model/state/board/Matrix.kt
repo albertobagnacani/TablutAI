@@ -1,4 +1,4 @@
-package ai.state.board
+package model.state.board
 
 interface Matrix<T>{
     val rows: Int

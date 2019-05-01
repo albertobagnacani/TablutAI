@@ -1,4 +1,4 @@
-package ai.state.rules
+package model.state.rules
 
 class StandardGameRulesFactory : GameRulesFactory {
     override fun createFromGameVersion(version: String): GameRules {

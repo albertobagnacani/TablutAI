@@ -1,4 +1,4 @@
-package ai.state.player
+package model.state.player
 
 /**
  * Interface used for specifying the players of the game

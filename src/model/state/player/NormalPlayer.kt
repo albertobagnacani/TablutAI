@@ -1,4 +1,4 @@
-package ai.state.player
+package model.state.player
 
 /**
  * Enum class representing the two players in the normal version

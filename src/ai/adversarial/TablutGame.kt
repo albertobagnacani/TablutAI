@@ -1,7 +1,7 @@
 package ai.adversarial
 
-import ai.state.player.NormalPlayer
-import ai.state.player.Player
+import model.state.player.NormalPlayer
+import model.state.player.Player
 import aima.core.agent.Action
 import aima.core.agent.State
 import aima.core.search.adversarial.Game

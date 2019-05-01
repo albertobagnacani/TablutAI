@@ -1,4 +1,4 @@
-package ai.state
+package model.state
 
 class StandardStateFactory : StateFactory {
     override fun createFromGameVersion(version: String): State {

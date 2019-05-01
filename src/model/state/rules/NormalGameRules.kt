@@ -1,4 +1,4 @@
-package ai.state.rules
+package model.state.rules
 
 class NormalGameRules : GameRules {
 }
