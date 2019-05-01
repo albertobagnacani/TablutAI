@@ -3,10 +3,8 @@ package client
 import ai.adversarial.TablutGame
 import aima.core.search.adversarial.IterativeDeepeningAlphaBetaSearch
 
-// TODO varianti, riutilizzabilità, modularità, etc.
-// TODO regole
 /**
- * The main, communicating with the server
+ * The main, communicating with the server.
  */
 fun main(args : Array<String>) {
     /**

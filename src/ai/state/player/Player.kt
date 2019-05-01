@@ -1,0 +1,8 @@
+package ai.state.player
+
+/**
+ * Interface used for specifying the players of the game
+ */
+// TODO factory?
+interface Player {
+}

@@ -1,10 +1,7 @@
-package ai.state
+package ai.state.board
 
-// TODO add matrix
-/**
- * Class representing the board
- */
-class Board{
+// TODO factory?
+interface NormalBoard<T> : Board<T> {
     /**
      * Type of the cell
      */
