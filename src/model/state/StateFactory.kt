@@ -1,6 +1,7 @@
 package model.state
 
 interface StateFactory {
-    // TODO use enum insted of String?
-    fun createFromGameVersion(version: String): State
+    // TODO1 use enum instead of String?
+    fun createFromGameVersion(version: String, boardTypePath: String): State
+    fun createInitialState(): State
 }

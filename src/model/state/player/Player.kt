@@ -1,8 +1,5 @@
 package model.state.player
 
-/**
- * Interface used for specifying the players of the game
- */
-// TODO factory?
+// TODO1 factory?
 interface Player {
 }

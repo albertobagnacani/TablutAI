@@ -1,4 +1,5 @@
 package model.state.board
 
-interface BoardCell {
+// TODO1 factory?
+interface BoardCell{
 }

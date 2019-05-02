@@ -1,6 +1,6 @@
 package model.state.board
 
-interface Matrix<T>{
+interface Matrix<out T>{
     val rows: Int
     val cols: Int
 
