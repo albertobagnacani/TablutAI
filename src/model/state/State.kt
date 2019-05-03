@@ -10,4 +10,6 @@ import model.state.board.NormalBoardCell
 interface State : State{
     val board: Board<BoardCell>
     val player: Player
+
+    fun isTerminal(): Boolean
 }

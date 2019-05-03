@@ -27,7 +27,7 @@ class NormalTablutGame(val initialS: State) : TablutGame {
         return state.player
     }
 
-    // TODO dovrebbe essere Array<Player>, ma da type mismatch
+    // TODO mettere Array<Player>
     override fun getPlayers(): Array<NormalPlayer> {
         return NormalPlayer.values()
     }
@@ -61,7 +61,7 @@ class NormalTablutGame(val initialS: State) : TablutGame {
      * States where the game has ended are called terminal states
      */
     override fun isTerminal(state: State): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return state.isTerminal()
     }
 
 }

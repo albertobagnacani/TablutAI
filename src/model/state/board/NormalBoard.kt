@@ -14,23 +14,23 @@ data class NormalBoard<T>(override val rows: Int, override val cols: Int, val bo
             c = 0
             item.split(" ").forEach {
                 when (it) {
-                    // TODO incongruenza: r vs y, c vs x
-                    "N" -> board[r][c] = NormalBoardCell(Coordinates(c, r), CellType.NORMAL, CellContent.NOTHING)
-                    "E" -> board[r][c] = NormalBoardCell(Coordinates(c, r), CellType.EXIT, CellContent.NOTHING)
-                    "C" -> board[r][c] = NormalBoardCell(Coordinates(c, r), CellType.CAMP, CellContent.BLACK)
-                    "K" -> board[r][c] = NormalBoardCell(Coordinates(c, r), CellType.CASTLE, CellContent.KING)
+                    // TODO incongruenza: r vs y, c vs x. Sistemare ovunque, anche scambio indici in coordinate
+                    "N" -> board[r][c] = NormalBoardCell(NormalCoordinate(c, r), CellType.NORMAL, CellContent.NOTHING)
+                    "E" -> board[r][c] = NormalBoardCell(NormalCoordinate(c, r), CellType.EXIT, CellContent.NOTHING)
+                    "C" -> board[r][c] = NormalBoardCell(NormalCoordinate(c, r), CellType.CAMP, CellContent.BLACK)
+                    "K" -> board[r][c] = NormalBoardCell(NormalCoordinate(c, r), CellType.CASTLE, CellContent.KING)
                 }
                 // TODO sistemare
-                if (Coordinates(c, r) == Coordinates(4, 2)
-                    || Coordinates(c, r) == Coordinates(4, 3)
-                    || Coordinates(c, r) == Coordinates(4, 5)
-                    || Coordinates(c, r) == Coordinates(4, 6)
-                    || Coordinates(c, r) == Coordinates(2, 4)
-                    || Coordinates(c, r) == Coordinates(3, 4)
-                    || Coordinates(c, r) == Coordinates(5, 4)
-                    || Coordinates(c, r) == Coordinates(6, 4)
+                if (NormalCoordinate(c, r) == NormalCoordinate(4, 2)
+                    || NormalCoordinate(c, r) == NormalCoordinate(4, 3)
+                    || NormalCoordinate(c, r) == NormalCoordinate(4, 5)
+                    || NormalCoordinate(c, r) == NormalCoordinate(4, 6)
+                    || NormalCoordinate(c, r) == NormalCoordinate(2, 4)
+                    || NormalCoordinate(c, r) == NormalCoordinate(3, 4)
+                    || NormalCoordinate(c, r) == NormalCoordinate(5, 4)
+                    || NormalCoordinate(c, r) == NormalCoordinate(6, 4)
                 )
-                    board[r][c] = NormalBoardCell(Coordinates(c, r), CellType.NORMAL, CellContent.WHITE)
+                    board[r][c] = NormalBoardCell(NormalCoordinate(c, r), CellType.NORMAL, CellContent.WHITE)
                 c++
             }
             r++
@@ -50,5 +50,132 @@ data class NormalBoard<T>(override val rows: Int, override val cols: Int, val bo
             }
             println()
         }
+    }
+
+    // TODO mettere .equals invece che == ?
+    fun getExitCoordinates(): List<Coordinate>{
+        var res = mutableListOf<Coordinate>()
+
+        for(i in 0..rows-1) {
+            for (j in 0..cols - 1) {
+                if(board[j][i].type==CellType.EXIT) {
+                    res.add(NormalCoordinate(j, i))
+                }
+            }
+        }
+
+        return res
+    }
+
+    fun getCampCoordinates(): List<Coordinate>{
+        var res = mutableListOf<Coordinate>()
+
+        for(i in 0..rows-1) {
+            for (j in 0..cols - 1) {
+                if(board[j][i].type==CellType.CAMP) {
+                    res.add(NormalCoordinate(j, i))
+                }
+            }
+        }
+
+        return res
+    }
+
+    fun getKingCoordinate(): NormalCoordinate{
+        var res = NormalCoordinate(-1, -1)
+
+        for(i in 0..rows-1) {
+            for (j in 0..cols - 1) {
+                if(board[j][i].content==CellContent.KING) {
+                    res = NormalCoordinate(j, i)
+                }
+            }
+        }
+
+        return res
+    }
+
+    fun getBlackCoordinates(): List<Coordinate>{
+        var res = mutableListOf<Coordinate>()
+
+        for(i in 0..rows-1) {
+            for (j in 0..cols - 1) {
+                if(board[j][i].content == CellContent.BLACK) {
+                    res.add(NormalCoordinate(j, i))
+                }
+            }
+        }
+
+        return res
+    }
+
+    fun getBoardCellFromCoord(c: NormalCoordinate): NormalBoardCell{
+        return NormalBoardCell(c, board[c.y][c.x].type, board[c.y][c.x].content)
+    }
+
+    // TODO1 can do in a better way
+    fun getBoardCellsFromCoords(coordinateList: List<NormalCoordinate>): List<NormalBoardCell>{
+        var res = mutableListOf<NormalBoardCell>()
+
+        for(coord in coordinateList){
+            res.add(NormalBoardCell(coord, board[coord.y][coord.x].type, board[coord.y][coord.x].content))
+        }
+
+        return res
+    }
+
+    // TODO change getBlack/Camp/ExitCoordinates in getBlack/Camp/ExitBoardCells calls everywhere, it's more generic and contains coordinates. Remove then the ...Coordinates
+    fun getBlackBoardCells(): List<NormalBoardCell>{
+        var res = mutableListOf<NormalBoardCell>()
+
+        for(i in 0..rows-1) {
+            for (j in 0..cols - 1) {
+                if(board[j][i].content == CellContent.BLACK) {
+                    res.add(board[j][i])
+                }
+            }
+        }
+
+        return res
+    }
+
+    fun getCampBoardCells(): List<NormalBoardCell>{
+        var res = mutableListOf<NormalBoardCell>()
+
+        for(i in 0..rows-1) {
+            for (j in 0..cols - 1) {
+                if(board[j][i].type == CellType.CAMP) {
+                    res.add(board[j][i])
+                }
+            }
+        }
+
+        return res
+    }
+
+    fun getExitBoardCells(): List<NormalBoardCell>{
+        var res = mutableListOf<NormalBoardCell>()
+
+        for(i in 0..rows-1) {
+            for (j in 0..cols - 1) {
+                if(board[j][i].type == CellType.EXIT) {
+                    res.add(board[j][i])
+                }
+            }
+        }
+
+        return res
+    }
+
+    fun getBlackAdjKing(): List<NormalBoardCell>{
+        val res = mutableListOf<NormalBoardCell>()
+        val blackBoardCell = this.getBlackBoardCells()
+
+        for(black in blackBoardCell){
+            if(black.coordinate.adjCoordinates().contains(this.getKingCoordinate()))
+                res.add(black)
+        }
+
+        return res
     }
 }
