@@ -6,7 +6,7 @@ data class NormalCoordinate(override val x: Int, override val y: Int) : Coordina
         fun getMiddleCoordinate() : Coordinate = NormalCoordinate(4, 4)
         // TODO attenzione: potrei andare fuori dalla board
         // TODO fare come metodo non statico?
-        fun getThirdCoordinateFromTwo(mainCoordinate: Coordinate, secondaryCoordinate: Coordinate): Coordinate{
+        fun getThirdCoordinateFromTwo(mainCoordinate: Coordinate, secondaryCoordinate: Coordinate): NormalCoordinate{
             if(mainCoordinate.x==secondaryCoordinate.x) {
                 return if (mainCoordinate.y < secondaryCoordinate.y) NormalCoordinate(mainCoordinate.x, mainCoordinate.y-1) else NormalCoordinate(mainCoordinate.x, mainCoordinate.y+1)
             }else if(mainCoordinate.y==secondaryCoordinate.y){
@@ -20,8 +20,8 @@ data class NormalCoordinate(override val x: Int, override val y: Int) : Coordina
 
     constructor(c: Coordinate) : this(c.x, c.y) {}
 
-    fun adjCoordinates(): List<Coordinate>{
-        val res = mutableListOf<Coordinate>()
+    fun adjCoordinates(): List<NormalCoordinate>{
+        val res = mutableListOf<NormalCoordinate>()
 
         // TODO sistemare
         if(x+1<=8){ // Right
