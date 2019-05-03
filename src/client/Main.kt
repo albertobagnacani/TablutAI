@@ -3,6 +3,8 @@ package client
 import ai.strategy.adversarial.NormalTablutGame
 import ai.strategy.adversarial.TablutGame
 import aima.core.search.adversarial.IterativeDeepeningAlphaBetaSearch
+import aima.core.search.framework.SearchAgent
+import aima.core.search.framework.problem.Problem
 import model.state.NormalState
 import model.state.StandardStateFactory
 import model.state.StateFactory
@@ -29,8 +31,15 @@ fun main(args : Array<String>) {
     val seconds = 45
     val state = StandardStateFactory().createFromGameVersion(gameVersion, boardTypePath)
     val game = NormalTablutGame(state, StandardGameRulesFactory().createFromGameVersion(gameVersion, state))
-
+    //val problem = Problem(initState, MCActionsFunction(), MCResultFunction(), MCGoalTest())
+    val current = System.currentTimeMillis()
     val search = IterativeDeepeningAlphaBetaSearch(game, utilMin, utilMax, seconds)
+    val action = search.makeDecision(state)
+    //val agent = SearchAgent(problem, search)
+    println("ms: ${System.currentTimeMillis() - current}")
+
+    //println(agent.actions)
+    //println(agent.instrumentation)
 
     /*
     val nb = NormalBoard<NormalBoardCell>(9, 9, boardTypePath)
