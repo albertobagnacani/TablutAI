@@ -1,10 +1,9 @@
 package model.state.board
 
-// TODO Specificare le coordinate degli accampamenti, del castello, delle uscite invece che in Board?
 data class NormalCoordinate(override val x: Int, override val y: Int) : Coordinate{
     companion object {
         fun getMiddleCoordinate() : Coordinate = NormalCoordinate(4, 4)
-        // TODO attenzione: potrei andare fuori dalla board
+        // TODO attenzione: potrei andare fuori dalla board. Exception quando errori?
         // TODO fare come metodo non statico?
         fun getThirdCoordinateFromTwo(mainCoordinate: Coordinate, secondaryCoordinate: Coordinate): NormalCoordinate{
             if(mainCoordinate.x==secondaryCoordinate.x) {
@@ -12,7 +11,6 @@ data class NormalCoordinate(override val x: Int, override val y: Int) : Coordina
             }else if(mainCoordinate.y==secondaryCoordinate.y){
                 return if (mainCoordinate.x < secondaryCoordinate.x) NormalCoordinate(mainCoordinate.x-1, mainCoordinate.y) else NormalCoordinate(mainCoordinate.x+1, mainCoordinate.y)
             }else{ // Error for this type of operation
-                // TODO exception?
                 return NormalCoordinate(0, 0)
             }
         }
@@ -23,7 +21,6 @@ data class NormalCoordinate(override val x: Int, override val y: Int) : Coordina
     fun adjCoordinates(): List<NormalCoordinate>{
         val res = mutableListOf<NormalCoordinate>()
 
-        // TODO sistemare
         if(x+1<=8){ // Right
             res.add(NormalCoordinate(x+1, y))
         }else if(y+1<=8) { // Down
@@ -37,6 +34,5 @@ data class NormalCoordinate(override val x: Int, override val y: Int) : Coordina
         return res
     }
 
-    // TODO ?
     //fun moveLeft(c: Coordinate): Coordinate{}
 }

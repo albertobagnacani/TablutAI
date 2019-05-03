@@ -1,6 +1,6 @@
 package model.state.board
 
-// TODO Fare factory?
+// TODO1 fare factory?
 interface Coordinate {
     val x: Int
     val y: Int

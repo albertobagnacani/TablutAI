@@ -31,8 +31,7 @@ fun main(args : Array<String>) {
 
     /*
     val nb = NormalBoard<NormalBoardCell>(9, 9, boardTypePath)
-    nb.printBoard(2)
-    val a = StandardStateFactory().createFromGameVersion("Normal", boardTypePath)
+    nb.printBoard(1)
     */
 
     /*

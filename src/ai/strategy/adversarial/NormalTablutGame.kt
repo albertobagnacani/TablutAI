@@ -1,11 +1,13 @@
 package ai.strategy.adversarial
 
 import aima.core.agent.Action
+import model.state.NormalState
 import model.state.State
 
 import model.state.StateFactory
 import model.state.player.NormalPlayer
 import model.state.player.Player
+import model.state.rules.NormalGameRules
 
 class NormalTablutGame(val initialS: State) : TablutGame {
     /**
@@ -61,7 +63,7 @@ class NormalTablutGame(val initialS: State) : TablutGame {
      * States where the game has ended are called terminal states
      */
     override fun isTerminal(state: State): Boolean {
-        return state.isTerminal()
+        return NormalGameRules(state as NormalState).isTerminal()
     }
 
 }

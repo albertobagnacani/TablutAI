@@ -13,9 +13,4 @@ class StandardStateFactory : StateFactory {
             else -> throw Exception("State not found")
         }
     }
-
-    // TODO remove?
-    override fun createInitialState(): State {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
 }

@@ -11,5 +11,5 @@ interface State : State{
     val board: Board<BoardCell>
     val player: Player
 
-    fun isTerminal(): Boolean
+    //fun isTerminal(): Boolean
 }
