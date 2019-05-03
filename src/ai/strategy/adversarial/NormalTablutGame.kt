@@ -14,7 +14,7 @@ class NormalTablutGame(val state: State, val gameRules: GameRules) : TablutGame 
     /**
      * The initial state, which specifies how the game is set up at the start
      */
-    // TODO is state correct? Shouldn't it be an "initialState"?
+    // TODO is state correct? Shouldn't it be something like "initialState"?
     override fun getInitialState(): State = state
 
     /**
