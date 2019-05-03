@@ -7,13 +7,15 @@ import model.state.State
 import model.state.StateFactory
 import model.state.player.NormalPlayer
 import model.state.player.Player
+import model.state.rules.GameRules
 import model.state.rules.NormalGameRules
 
-class NormalTablutGame(val initialS: State) : TablutGame {
+class NormalTablutGame(val state: State, val gameRules: GameRules) : TablutGame {
     /**
      * The initial state, which specifies how the game is set up at the start
      */
-    override fun getInitialState(): State = initialS
+    // TODO is state correct? Shouldn't it be an "initialState"?
+    override fun getInitialState(): State = state
 
     /**
      * The transition model, which defines the result of a move.
@@ -62,8 +64,9 @@ class NormalTablutGame(val initialS: State) : TablutGame {
      * and false TERMINAL STATES otherwise.
      * States where the game has ended are called terminal states
      */
+    // TODO why this cast?
     override fun isTerminal(state: State): Boolean {
-        return NormalGameRules(state as NormalState).isTerminal()
+        return (gameRules as NormalGameRules).isTerminal()
     }
 
 }

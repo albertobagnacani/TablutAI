@@ -9,6 +9,8 @@ import model.state.StateFactory
 import model.state.board.*
 import model.state.player.NormalPlayer
 import model.state.player.Player
+import model.state.rules.GameRulesFactory
+import model.state.rules.StandardGameRulesFactory
 
 fun main(args : Array<String>) {
     val boardTypePath = "src/resources/normalBoardType.txt"
@@ -25,7 +27,8 @@ fun main(args : Array<String>) {
      * Time used by IterativeDeepeningAlphaBetaSearch
      */
     val seconds = 45
-    val game = NormalTablutGame(StandardStateFactory().createFromGameVersion(gameVersion, boardTypePath))
+    val state = StandardStateFactory().createFromGameVersion(gameVersion, boardTypePath)
+    val game = NormalTablutGame(state, StandardGameRulesFactory().createFromGameVersion(gameVersion, state))
 
     val search = IterativeDeepeningAlphaBetaSearch(game, utilMin, utilMax, seconds)
 
