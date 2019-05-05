@@ -105,7 +105,7 @@ class NormalGameRules(val s: NormalState) : GameRules {
         if(s.player == NormalPlayer.WHITE){ // The king arrives on the exit
             return isKingEscaped()
         }else{ // The king has been captured by blacks
-            // TODO if migliorabile
+            // TODO1 if migliorabile
             if(s.board.getKingBoardCell().coordinate.equals(NormalCoordinate.getMiddleCoordinate())){ // Case 1)
                 return isKingInCastleAndSurrounded()
             }else if(NormalCoordinate(NormalCoordinate.getMiddleCoordinate()).adjCoordinates().contains(s.board.getKingBoardCell().coordinate)){ // The king is in an castle's adj cell Case 2)

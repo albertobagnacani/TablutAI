@@ -6,7 +6,7 @@ import model.state.State
 class StandardGameRulesFactory : GameRulesFactory {
     override fun createFromGameVersion(version: String, s: State): GameRules {
         return when(version){
-            // TODO why this cast?
+            // TODO1 why this cast?
             "Normal" -> NormalGameRules(s as NormalState)
             // "Brandubh" -> BrandubhGameRules()
             // ...

@@ -1,5 +1,7 @@
 package ai.strategy.adversarial
 
+import ai.action.NormalTablutAction
+import ai.action.TablutAction
 import aima.core.agent.Action
 import model.state.NormalState
 import model.state.State
@@ -10,7 +12,7 @@ import model.state.player.Player
 import model.state.rules.GameRules
 import model.state.rules.NormalGameRules
 
-class NormalTablutGame(val state: State, val gameRules: GameRules) : TablutGame {
+class NormalTablutGame(val state: State, val gameRules: GameRules, val tablutAction: TablutAction) : TablutGame {
     /**
      * The initial state, which specifies how the game is set up at the start
      */
@@ -31,7 +33,7 @@ class NormalTablutGame(val state: State, val gameRules: GameRules) : TablutGame 
         return state.player
     }
 
-    // TODO mettere Array<Player>
+    // TODO1 mettere Array<Player>
     override fun getPlayers(): Array<NormalPlayer> {
         return NormalPlayer.values()
     }
@@ -39,8 +41,8 @@ class NormalTablutGame(val state: State, val gameRules: GameRules) : TablutGame 
     /**
      * Returns the set of legal moves in a state.
      */
-    override fun getActions(state: State): MutableList<Action> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun getActions(state: State): List<Action> {
+        return (tablutAction as NormalTablutAction).actions(state).toList()
     }
 
     /**
@@ -64,9 +66,8 @@ class NormalTablutGame(val state: State, val gameRules: GameRules) : TablutGame 
      * and false TERMINAL STATES otherwise.
      * States where the game has ended are called terminal states
      */
-    // TODO why this cast?
+    // TODO1 why these cast?
     override fun isTerminal(state: State): Boolean {
         return (gameRules as NormalGameRules).isTerminal()
     }
-
 }

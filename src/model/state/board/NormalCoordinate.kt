@@ -4,7 +4,7 @@ data class NormalCoordinate(override val x: Int, override val y: Int) : Coordina
     companion object {
         fun getMiddleCoordinate() : Coordinate = NormalCoordinate(4, 4)
         // TODO attenzione: potrei andare fuori dalla board. Exception quando errori?
-        // TODO fare come metodo non statico?
+        // TODO1 fare come metodo non statico?
         fun getThirdCoordinateFromTwo(mainCoordinate: Coordinate, secondaryCoordinate: Coordinate): NormalCoordinate{
             if(mainCoordinate.x==secondaryCoordinate.x) {
                 return if (mainCoordinate.y < secondaryCoordinate.y) NormalCoordinate(mainCoordinate.x, mainCoordinate.y-1) else NormalCoordinate(mainCoordinate.x, mainCoordinate.y+1)
@@ -16,7 +16,8 @@ data class NormalCoordinate(override val x: Int, override val y: Int) : Coordina
         }
     }
 
-    constructor(c: Coordinate) : this(c.x, c.y) {}
+    constructor(c: Coordinate) : this(c.x, c.y)
+    constructor() : this(0, 0) {}
 
     fun adjCoordinates(): List<NormalCoordinate>{
         val res = mutableListOf<NormalCoordinate>()
@@ -32,6 +33,10 @@ data class NormalCoordinate(override val x: Int, override val y: Int) : Coordina
         }
 
         return res
+    }
+
+    override fun toString(): String {
+        return "NormalCoordinate(x=$x, y=$y)"
     }
 
     //fun moveLeft(c: Coordinate): Coordinate{}

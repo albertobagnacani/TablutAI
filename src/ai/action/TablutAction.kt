@@ -1,6 +1,7 @@
 package ai.action
 
 import aima.core.agent.impl.DynamicAction
+import aima.core.search.framework.problem.ActionsFunction
 
-abstract class TablutAction(name: String?) : DynamicAction(name) {
+abstract class TablutAction: ActionsFunction {
 }

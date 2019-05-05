@@ -1,45 +1,89 @@
 package model.state.board
 
+import com.google.gson.annotations.Expose
+import com.google.gson.annotations.SerializedName
 import java.io.File
+import java.util.*
 
 // TODO1 factory?
-data class NormalBoard<T>(override val rows: Int, override val cols: Int, val boardTypePath: String) : Board<NormalBoardCell>, ArrayMatrix<NormalBoardCell>(rows, cols, Array(rows){Array(cols){NormalBoardCell()}}){
+data class NormalBoard<out T>(override val rows: Int, override val cols: Int, val boardTypePath: String, val boardContentPath: String) : Board<NormalBoardCell>, ArrayMatrix<NormalBoardCell>(rows, cols, Array(rows){Array(cols){NormalBoardCell()}}){
+    //@SerializedName("board")
+    //@Expose
     val board = this.array
 
     init{
+        initializeCoords()
+        initializeType()
+        initializeContent()
+    }
+
+    fun initializeCoords(){
         var r = 0
         var c = 0
 
+        for(i in 0..rows-1){
+            for(j in 0..cols-1){
+                board[r][c] = NormalBoardCell(NormalCoordinate(r, c), CellType.NORMAL, CellContent.WHITE)
+            }
+        }
+    }
+
+    fun initializeType(){
+        var r = 0
+        var c = 0
         File(boardTypePath).forEachLine { item ->
             c = 0
             item.split(" ").forEach {
                 when (it) {
-                    "N" -> board[r][c] = NormalBoardCell(NormalCoordinate(r, c), CellType.NORMAL, CellContent.NOTHING)
-                    "E" -> board[r][c] = NormalBoardCell(NormalCoordinate(r, c), CellType.EXIT, CellContent.NOTHING)
-                    "C" -> board[r][c] = NormalBoardCell(NormalCoordinate(r, c), CellType.CAMP, CellContent.BLACK)
-                    "K" -> board[r][c] = NormalBoardCell(NormalCoordinate(r, c), CellType.CASTLE, CellContent.KING)
+                    "N" -> board[r][c].type = CellType.NORMAL
+                    "E" -> board[r][c].type = CellType.EXIT
+                    "C" -> board[r][c].type = CellType.CAMP
+                    "K" -> board[r][c].type = CellType.CASTLE
                 }
                 c++
             }
             r++
         }
-        for(i in 0..rows-1){
-            if(board[i][4].content == CellContent.NOTHING)
-                board[i][4] = NormalBoardCell(NormalCoordinate(r, 4), CellType.NORMAL, CellContent.WHITE)
-        }
+    }
 
-        for(j in 0..cols-1){
-            if(board[4][j].content == CellContent.NOTHING)
-                board[4][j] = NormalBoardCell(NormalCoordinate(4, j), CellType.NORMAL, CellContent.WHITE)
+    fun initializeContent(){
+        var r = 0
+        var c = 0
+        File(boardContentPath).forEachLine { item ->
+            c = 0
+            item.split(" ").forEach {
+                when (it) {
+                    "N" -> board[r][c].content = CellContent.NOTHING
+                    "W" -> board[r][c].content = CellContent.WHITE
+                    "B" -> board[r][c].content = CellContent.BLACK
+                    "K" -> board[r][c].content = CellContent.KING
+                }
+                c++
+            }
+            r++
         }
     }
 
-    fun init(){
-
+    fun initializeContent(f: File){
+        var r = 0
+        var c = 0
+        File(f.name).forEachLine { item ->
+            c = 0
+            item.split(" ").forEach {
+                when (it) {
+                    "N" -> board[r][c].content = CellContent.NOTHING
+                    "W" -> board[r][c].content = CellContent.WHITE
+                    "B" -> board[r][c].content = CellContent.BLACK
+                    "K" -> board[r][c].content = CellContent.KING
+                }
+                c++
+            }
+            r++
+        }
     }
 
     // TODO1 enum su toShow
-    fun printBoard(toShow: Int){ // TODO check scambio indici in questi 3 files (no main)
+    fun printBoard(toShow: Int){
         for(i in 0..rows-1) {
             for (j in 0..cols - 1) {
                 // TODO1 bruttino "" per inferire stringa
@@ -146,5 +190,9 @@ data class NormalBoard<T>(override val rows: Int, override val cols: Int, val bo
         }
 
         return res
+    }
+
+    override fun toString(): String {
+        return "NormalBoard(rows=$rows, cols=$cols, boardTypePath='$boardTypePath', board=${Arrays.toString(board)})"
     }
 }

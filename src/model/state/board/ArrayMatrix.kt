@@ -1,5 +1,9 @@
 package model.state.board
 
+import com.google.gson.annotations.Expose
+import com.google.gson.annotations.SerializedName
+import java.util.*
+
 /*
 This also allows you to create 2d arrays in a similar manner to 1d arrays, e.g. something like
 val array2D = Array2D<String>(5, 5) { x, y -> "$x $y" }
@@ -41,5 +45,9 @@ open class ArrayMatrix<T>(override val rows: Int, override val cols: Int, var ar
 
     inline fun forEachIndexed(operation: (x: Int, y: Int, T) -> Unit) {
         array.forEachIndexed { x, p -> p.forEachIndexed { y, t -> operation.invoke(x, y, t) } }
+    }
+
+    override fun toString(): String {
+        return "ArrayMatrix(rows=$rows, cols=$cols, array=${Arrays.toString(array)})"
     }
 }
