@@ -22,8 +22,8 @@ fun main(args : Array<String>) {
     val player = if(args[0] == "White") {NormalPlayer.WHITE} else {NormalPlayer.BLACK}
     val seconds = args[1].toInt()-10
 
-    val state = StandardStateFactory().createFromGameVersion(gameVersion, boardTypePath, boardContentPath)
-    val client = TablutClient(player, "Franco", state)
+    val initialState = StandardStateFactory().createFromGameVersion(gameVersion, boardTypePath, boardContentPath)
+    val client = TablutClient(player, "Franco", initialState)
 
     client.declareName()
     client.read() // Initial state
@@ -32,9 +32,15 @@ fun main(args : Array<String>) {
         client.read()
     }
 
+    val utilMin = -1.0
+    val utilMax = 1.0
+
     while(true) {
         // eval action
-        // client.write()
+        var game = NormalTablutGame(client.state, initialState as NormalState, StandardGameRulesFactory().createFromGameVersion(gameVersion, client.state), NormalTablutAction())
+        var search = IterativeDeepeningAlphaBetaSearch(game, utilMin, utilMax, seconds)
+        var action = search.makeDecision(client.state)
+        client.write(action)
         client.read() // Read what my action did
         client.read()
     }

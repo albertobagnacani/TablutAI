@@ -11,8 +11,6 @@ class NormalTablutAction() : TablutAction() {
         val state = s as NormalState
         val res = mutableSetOf<Action>() // Use CellWorldAction?
 
-
-
         return res
     }
 }
