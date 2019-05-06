@@ -20,7 +20,7 @@ class NormalTablutGame(val state: State, val initialState: NormalState, val game
      * The transition model, which defines the result of a move.
      */
     override fun getResult(state: State, action: Action): State {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+       return (state as NormalState).applyAction(action as NormalTablutAction)
     }
 
     /**

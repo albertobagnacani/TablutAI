@@ -97,6 +97,14 @@ data class NormalBoard<out T>(override val rows: Int, override val cols: Int, va
         }
     }
 
+    fun getElement(c: Coordinate) : NormalBoardCell{
+        return board[c.x][c.y]
+    }
+
+    fun setElement(c: Coordinate, n: NormalBoardCell) {
+        board[c.x][c.y] = n
+    }
+
     fun getKingBoardCell(): NormalBoardCell{
         var res = NormalBoardCell()
 

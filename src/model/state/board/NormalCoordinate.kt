@@ -2,6 +2,8 @@ package model.state.board
 
 data class NormalCoordinate(override val x: Int, override val y: Int) : Coordinate{
     companion object {
+        val arr = arrayOf("a", "b", "c", "d", "e", "f", "g", "h", "i")
+
         fun getMiddleCoordinate() : Coordinate = NormalCoordinate(4, 4)
         // TODO attenzione: potrei andare fuori dalla board. Exception quando errori?
         // TODO1 fare come metodo non statico?
@@ -40,9 +42,14 @@ data class NormalCoordinate(override val x: Int, override val y: Int) : Coordina
     }
 
     fun returnCell(): String{
-        val arr = arrayOf("a", "b", "c", "d", "e", "f", "g", "h", "i")
-
         return arr[y]+x
+    }
+
+    fun fromCell(s: String): Coordinate{
+        val y = arr.indexOf(s.substring(0, 1))
+        val x = s.substring(0, 1).toInt()
+
+        return NormalCoordinate(x, y)
     }
 
     //fun moveLeft(c: Coordinate): Coordinate{}
