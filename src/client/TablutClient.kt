@@ -1,6 +1,6 @@
 package client
 
-import aima.core.agent.Action
+import ai.action.Action
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import model.state.NormalState

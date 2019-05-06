@@ -1,8 +1,6 @@
 package ai.strategy.adversarial
 
-import ai.action.NormalTablutAction
-import ai.action.TablutAction
-import aima.core.agent.Action
+import ai.action.*
 import model.state.NormalState
 import model.state.State
 
@@ -12,7 +10,7 @@ import model.state.player.Player
 import model.state.rules.GameRules
 import model.state.rules.NormalGameRules
 
-class NormalTablutGame(val state: State, val initialState: NormalState, val gameRules: GameRules, val tablutAction: TablutAction) : TablutGame {
+class NormalTablutGame(val state: State, val initialState: NormalState, val gameRules: NormalGameRules, val actionResolver: ActionResolver) : TablutGame {
     /**
      * The initial state, which specifies how the game is set up at the start
      */
@@ -41,7 +39,7 @@ class NormalTablutGame(val state: State, val initialState: NormalState, val game
      * Returns the set of legal moves in a state.
      */
     override fun getActions(state: State): List<Action> {
-        return (tablutAction as NormalTablutAction).actions(state).toList() // TODO
+        return actionResolver.actions(state)
     }
 
     /**
@@ -56,8 +54,11 @@ class NormalTablutGame(val state: State, val initialState: NormalState, val game
      * better term, but zero-sum is traditional and makes sense if you imagine each
      * player is charged an entry fee of 1/2.
      */
+    // TODO1 sistemare NormalGameRules(state).isTerminal()
+    // TODO1 hardcoded 1 and 0
+    // TODO2 patta come hash dello stato
     override fun getUtility(state: State, player: Player): Double {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return if(NormalGameRules(state as NormalState).isTerminal() && initialState.player == state.player) 1.0 else 0.0 // TODO patta
     }
 
     /**

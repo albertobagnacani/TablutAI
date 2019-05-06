@@ -1,3 +1,5 @@
+import ai.action.ActionResolver
+import ai.action.NormalActionResolver
 import ai.action.NormalTablutAction
 import ai.strategy.adversarial.NormalTablutGame
 import ai.strategy.adversarial.TablutGame
@@ -12,6 +14,7 @@ import model.state.board.*
 import model.state.player.NormalPlayer
 import model.state.player.Player
 import model.state.rules.GameRulesFactory
+import model.state.rules.NormalGameRules
 import model.state.rules.StandardGameRulesFactory
 
 fun main(args : Array<String>) {
@@ -37,27 +40,11 @@ fun main(args : Array<String>) {
 
     while(true) {
         // eval action
-        var game = NormalTablutGame(client.state, initialState as NormalState, StandardGameRulesFactory().createFromGameVersion(gameVersion, client.state), NormalTablutAction())
+        var game = NormalTablutGame(client.state, initialState as NormalState, StandardGameRulesFactory().createFromGameVersion(gameVersion, client.state) as NormalGameRules, NormalActionResolver())
         var search = IterativeDeepeningAlphaBetaSearch(game, utilMin, utilMax, seconds)
         var action = search.makeDecision(client.state)
         client.write(action)
         client.read() // Read what my action did
         client.read()
     }
-
-    /*
-    val game = NormalTablutGame(state, StandardGameRulesFactory().createFromGameVersion(gameVersion, state), NormalTablutAction())
-    //val problem = Problem(initState, MCActionsFunction(), MCResultFunction(), MCGoalTest())
-
-    val current = System.currentTimeMillis()
-
-    val utilMin = -1.0
-    val utilMax = 1.0
-    val search = IterativeDeepeningAlphaBetaSearch(game, utilMin, utilMax, seconds)
-    val action = search.makeDecision(state)
-    //val agent = SearchAgent(problem, search)
-    //println(agent.actions)
-    //println(agent.instrumentation)
-    println("ms: ${System.currentTimeMillis() - current}")
-    */
 }

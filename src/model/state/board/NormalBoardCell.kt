@@ -7,5 +7,4 @@ data class NormalBoardCell(var coordinate: NormalCoordinate, var type: CellType,
     override fun toString(): String {
         return "NormalBoardCell(coordinate=$coordinate, type=$type, content=$content)"
     }
-
 }

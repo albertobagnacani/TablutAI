@@ -39,5 +39,11 @@ data class NormalCoordinate(override val x: Int, override val y: Int) : Coordina
         return "NormalCoordinate(x=$x, y=$y)"
     }
 
+    fun returnCell(): String{
+        val arr = arrayOf("a", "b", "c", "d", "e", "f", "g", "h", "i")
+
+        return arr[y]+x
+    }
+
     //fun moveLeft(c: Coordinate): Coordinate{}
 }
