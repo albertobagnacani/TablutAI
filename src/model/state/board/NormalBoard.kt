@@ -9,7 +9,7 @@ import java.util.*
 data class NormalBoard<out T>(override val rows: Int, override val cols: Int, val boardTypePath: String, val boardContentPath: String) : Board<NormalBoardCell>, ArrayMatrix<NormalBoardCell>(rows, cols, Array(rows){Array(cols){NormalBoardCell()}}){
     //@SerializedName("board")
     //@Expose
-    val board = this.array
+    var board = this.array
 
     init{
         initializeCoords()
@@ -18,19 +18,16 @@ data class NormalBoard<out T>(override val rows: Int, override val cols: Int, va
     }
 
     fun initializeCoords(){
-        var r = 0
-        var c = 0
-
         for(i in 0..rows-1){
             for(j in 0..cols-1){
-                board[r][c] = NormalBoardCell(NormalCoordinate(r, c), CellType.NORMAL, CellContent.WHITE)
+                board[i][j] = NormalBoardCell(NormalCoordinate(i, j), CellType.NORMAL, CellContent.WHITE)
             }
         }
     }
 
     fun initializeType(){
         var r = 0
-        var c = 0
+        var c: Int
         File(boardTypePath).forEachLine { item ->
             c = 0
             item.split(" ").forEach {
@@ -48,7 +45,7 @@ data class NormalBoard<out T>(override val rows: Int, override val cols: Int, va
 
     fun initializeContent(){
         var r = 0
-        var c = 0
+        var c: Int
         File(boardContentPath).forEachLine { item ->
             c = 0
             item.split(" ").forEach {

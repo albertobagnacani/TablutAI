@@ -26,7 +26,7 @@ fun main(args : Array<String>) {
     val seconds = args[1].toInt()-10
 
     val initialState = StandardStateFactory().createFromGameVersion(gameVersion, boardTypePath, boardContentPath)
-    val client = TablutClient(player, "Franco", initialState)
+    val client = TablutClient(player, "Franco", StandardStateFactory().createFromGameVersion(gameVersion, boardTypePath, boardContentPath))
 
     client.declareName()
     client.read() // Initial state

@@ -12,7 +12,8 @@ class NormalActionResolver : ActionResolver {
 
         for(i in 0..s.board.rows-1){
             for(j in 0..s.board.cols-1){
-                if(state.board.board[i][j].content != CellContent.NOTHING) {
+                if(state.board.board[i][j].content.name == s.player.name) { // TODO king is a white
+                    //val bc = state.board[2,3] //TODO1 can access like this everywhere
                     res.addAll(availableActions(state, state.board.board[i][j]))
                 }
             }
@@ -72,7 +73,7 @@ class NormalActionResolver : ActionResolver {
         var res = mutableListOf<Action>()
         val y = bc.coordinate.y
 
-        for(j in y+1..state.board.cols){
+        for(j in y+1..state.board.cols-1){
             when(bc.content){
                 CellContent.WHITE ->{
                     if(state.board.board[bc.coordinate.x][j].content == CellContent.NOTHING && state.board.board[bc.coordinate.x][j].type == CellType.NORMAL){
@@ -105,7 +106,7 @@ class NormalActionResolver : ActionResolver {
         var res = mutableListOf<Action>()
         val x = bc.coordinate.x
 
-        for(i in x+1..state.board.rows){
+        for(i in x+1..state.board.rows-1){
             when(bc.content){
                 CellContent.WHITE ->{
                     if(state.board.board[i][bc.coordinate.y].content == CellContent.NOTHING && state.board.board[i][bc.coordinate.y].type == CellType.NORMAL){

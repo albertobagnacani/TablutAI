@@ -42,14 +42,14 @@ data class NormalCoordinate(override val x: Int, override val y: Int) : Coordina
     }
 
     fun returnCell(): String{
-        return arr[y]+x
+        return arr[y]+(x+1)  // x+1 because TablutCompetition's server board starts from 1 (and not 0)
     }
 
     fun fromCell(s: String): Coordinate{
         val y = arr.indexOf(s.substring(0, 1))
-        val x = s.substring(0, 1).toInt()
+        val x = s.substring(1, 2).toInt()
 
-        return NormalCoordinate(x, y)
+        return NormalCoordinate(x-1, y) // x-1 like before
     }
 
     //fun moveLeft(c: Coordinate): Coordinate{}

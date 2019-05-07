@@ -51,7 +51,7 @@ data class TablutClient(val player: NormalPlayer, val name: String, var state: S
 
     fun read(){
         val read = StreamUtils.readString(dis)
-        state = JSONState(read, state as NormalState).deserialize()
+        this.state = JSONState(read, state as NormalState).deserialize()
     }
 
     fun declareName(){

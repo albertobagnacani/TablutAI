@@ -32,6 +32,8 @@ class JSONState(val newStateString: String, val oldState: NormalState) {
             }
         }
 
+        //res.board.initializeCoords()
+        //res.board.initializeType()
         res.board.initializeContent(tmp)
         tmp.delete()
         res.player = if(b[b.size-1] == "WHITE") NormalPlayer.WHITE else NormalPlayer.BLACK
