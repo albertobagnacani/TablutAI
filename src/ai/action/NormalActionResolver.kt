@@ -12,7 +12,8 @@ class NormalActionResolver : ActionResolver {
 
         for(i in 0..s.board.rows-1){
             for(j in 0..s.board.cols-1){
-                if(state.board.board[i][j].content.name == s.player.name) { // TODO king is a white
+                //if(moveablePawn(state.board.board[i][j], state.player)) {
+                if(state.board.board[i][j].content.name == s.player.name){
                     //val bc = state.board[2,3] //TODO1 can access like this everywhere
                     res.addAll(availableActions(state, state.board.board[i][j]))
                 }
@@ -21,7 +22,19 @@ class NormalActionResolver : ActionResolver {
 
         return res
     }
-    // TODO pedine possono andare su caselle blu?
+
+    fun moveablePawn(c: NormalBoardCell, p: NormalPlayer): Boolean{
+        if(p == NormalPlayer.WHITE){
+            if(c.content == CellContent.WHITE || c.content == CellContent.KING){
+                return true
+            }
+        }else{
+            if(c.content == CellContent.BLACK){
+                return true
+            }
+        }
+        return false
+    }
 
     // For every direction (up, right, down, left), returns the number of cells a pawn can go
     fun availableActions(state: NormalState, bc: NormalBoardCell): List<Action>{
@@ -42,23 +55,24 @@ class NormalActionResolver : ActionResolver {
         val x = bc.coordinate.x
 
         loop@for(i in x-1 downTo 0){ // TODO attenzione non andare fuori dalla board con x-1 (per tutti i casi, con relative x/y(+/-1))
+            var cell = state.board.board[i][bc.coordinate.y]
             when(bc.content){
                 CellContent.WHITE ->{
-                    if(state.board.board[i][bc.coordinate.y].content == CellContent.NOTHING && state.board.board[i][bc.coordinate.y].type == CellType.NORMAL){
+                    if(cell.content == CellContent.NOTHING && (cell.type == CellType.NORMAL || cell.type == CellType.EXIT)){
                         res.add(NormalTablutAction(NormalCoordinate(bc.coordinate).returnCell(), NormalCoordinate(i, bc.coordinate.y).returnCell(), if(state.player==NormalPlayer.WHITE) "WHITE" else "BLACK")) // TODO this player or other turn player? // TODO1 fare "toString" enum (anche altri casi)
                     }else{
                         break@loop
                     }
                 }
                 CellContent.BLACK ->{ // TODO if black stays inside a camp, the cell can be a camp (anche altri casi)
-                    if(state.board.board[i][bc.coordinate.y].content == CellContent.NOTHING && state.board.board[i][bc.coordinate.y].type == CellType.NORMAL){
+                    if(cell.content == CellContent.NOTHING && (cell.type == CellType.NORMAL || cell.type == CellType.EXIT)){
                         res.add(NormalTablutAction(NormalCoordinate(bc.coordinate).returnCell(), NormalCoordinate(i, bc.coordinate.y).returnCell(), if(state.player==NormalPlayer.WHITE) "WHITE" else "BLACK"))
                     }else{
                         break@loop
                     }
                 }
                 CellContent.KING ->{
-                    if(state.board.board[i][bc.coordinate.y].content == CellContent.NOTHING && (state.board.board[i][bc.coordinate.y].type == CellType.NORMAL || state.board.board[i][bc.coordinate.y].type == CellType.EXIT)){
+                    if(cell.content == CellContent.NOTHING && (cell.type == CellType.NORMAL || cell.type == CellType.EXIT)){
                         res.add(NormalTablutAction(NormalCoordinate(bc.coordinate).returnCell(), NormalCoordinate(i, bc.coordinate.y).returnCell(), if(state.player==NormalPlayer.WHITE) "WHITE" else "BLACK"))
                     }else{
                         break@loop
@@ -75,23 +89,24 @@ class NormalActionResolver : ActionResolver {
         val y = bc.coordinate.y
 
         loop@for(j in y+1..state.board.cols-1){
+            var cell = state.board.board[bc.coordinate.x][j]
             when(bc.content){
                 CellContent.WHITE ->{
-                    if(state.board.board[bc.coordinate.x][j].content == CellContent.NOTHING && state.board.board[bc.coordinate.x][j].type == CellType.NORMAL){
+                    if(cell.content == CellContent.NOTHING && (cell.type == CellType.NORMAL || cell.type == CellType.EXIT)){
                         res.add(NormalTablutAction(NormalCoordinate(bc.coordinate).returnCell(), NormalCoordinate(bc.coordinate.x, j).returnCell(), if(state.player==NormalPlayer.WHITE) "WHITE" else "BLACK"))
                     }else{
                         break@loop
                     }
                 }
                 CellContent.BLACK ->{
-                    if(state.board.board[bc.coordinate.x][j].content == CellContent.NOTHING && state.board.board[bc.coordinate.x][j].type == CellType.NORMAL){
+                    if(cell.content == CellContent.NOTHING && (cell.type == CellType.NORMAL || cell.type == CellType.EXIT)){
                         res.add(NormalTablutAction(NormalCoordinate(bc.coordinate).returnCell(), NormalCoordinate(bc.coordinate.x, j).returnCell(), if(state.player==NormalPlayer.WHITE) "WHITE" else "BLACK"))
                     }else{
                         break@loop
                     }
                 }
                 CellContent.KING ->{
-                    if(state.board.board[bc.coordinate.x][j].content == CellContent.NOTHING && (state.board.board[bc.coordinate.x][j].type == CellType.NORMAL || state.board.board[bc.coordinate.x][j].type == CellType.EXIT)){
+                    if(cell.content == CellContent.NOTHING && (cell.type == CellType.NORMAL || cell.type == CellType.EXIT)){
                         res.add(NormalTablutAction(NormalCoordinate(bc.coordinate).returnCell(), NormalCoordinate(bc.coordinate.x, j).returnCell(), if(state.player==NormalPlayer.WHITE) "WHITE" else "BLACK"))
                     }else{
                         break@loop
@@ -108,23 +123,24 @@ class NormalActionResolver : ActionResolver {
         val x = bc.coordinate.x
 
         loop@for(i in x+1..state.board.rows-1){
+            var cell = state.board.board[i][bc.coordinate.y]
             when(bc.content){
                 CellContent.WHITE ->{
-                    if(state.board.board[i][bc.coordinate.y].content == CellContent.NOTHING && state.board.board[i][bc.coordinate.y].type == CellType.NORMAL){
+                    if(cell.content == CellContent.NOTHING && (cell.type == CellType.NORMAL || cell.type == CellType.EXIT)){
                         res.add(NormalTablutAction(NormalCoordinate(bc.coordinate).returnCell(), NormalCoordinate(i, bc.coordinate.y).returnCell(), if(state.player==NormalPlayer.WHITE) "WHITE" else "BLACK"))
                     }else{
                         break@loop
                     }
                 }
                 CellContent.BLACK ->{
-                    if(state.board.board[i][bc.coordinate.y].content == CellContent.NOTHING && state.board.board[i][bc.coordinate.y].type == CellType.NORMAL){
+                    if(cell.content == CellContent.NOTHING && (cell.type == CellType.NORMAL || cell.type == CellType.EXIT)){
                         res.add(NormalTablutAction(NormalCoordinate(bc.coordinate).returnCell(), NormalCoordinate(i, bc.coordinate.y).returnCell(), if(state.player==NormalPlayer.WHITE) "WHITE" else "BLACK"))
                     }else{
                         break@loop
                     }
                 }
                 CellContent.KING ->{
-                    if(state.board.board[i][bc.coordinate.y].content == CellContent.NOTHING && (state.board.board[i][bc.coordinate.y].type == CellType.NORMAL || state.board.board[i][bc.coordinate.y].type == CellType.EXIT)){
+                    if(cell.content == CellContent.NOTHING && (cell.type == CellType.NORMAL || cell.type == CellType.EXIT)){
                         res.add(NormalTablutAction(NormalCoordinate(bc.coordinate).returnCell(), NormalCoordinate(i, bc.coordinate.y).returnCell(), if(state.player==NormalPlayer.WHITE) "WHITE" else "BLACK"))
                     }else{
                         break@loop
@@ -141,23 +157,24 @@ class NormalActionResolver : ActionResolver {
         val y = bc.coordinate.y
 
         loop@for(j in y-1 downTo 0){
+            var cell = state.board.board[bc.coordinate.x][j]
             when(bc.content){
                 CellContent.WHITE ->{
-                    if(state.board.board[bc.coordinate.x][j].content == CellContent.NOTHING && state.board.board[bc.coordinate.x][j].type == CellType.NORMAL){
+                    if(cell.content == CellContent.NOTHING && (cell.type == CellType.NORMAL || cell.type == CellType.EXIT)){
                         res.add(NormalTablutAction(NormalCoordinate(bc.coordinate).returnCell(), NormalCoordinate(bc.coordinate.x, j).returnCell(), if(state.player==NormalPlayer.WHITE) "WHITE" else "BLACK"))
                     }else{
                         break@loop
                     }
                 }
                 CellContent.BLACK ->{
-                    if(state.board.board[bc.coordinate.x][j].content == CellContent.NOTHING && state.board.board[bc.coordinate.x][j].type == CellType.NORMAL){
+                    if(cell.content == CellContent.NOTHING && (cell.type == CellType.NORMAL || cell.type == CellType.EXIT)){
                         res.add(NormalTablutAction(NormalCoordinate(bc.coordinate).returnCell(), NormalCoordinate(bc.coordinate.x, j).returnCell(), if(state.player==NormalPlayer.WHITE) "WHITE" else "BLACK"))
                     }else{
                         break@loop
                     }
                 }
                 CellContent.KING ->{
-                    if(state.board.board[bc.coordinate.x][j].content == CellContent.NOTHING && (state.board.board[bc.coordinate.x][j].type == CellType.NORMAL || state.board.board[bc.coordinate.x][j].type == CellType.EXIT)){
+                    if(cell.content == CellContent.NOTHING && (cell.type == CellType.NORMAL || cell.type == CellType.EXIT)){
                         res.add(NormalTablutAction(NormalCoordinate(bc.coordinate).returnCell(), NormalCoordinate(bc.coordinate.x, j).returnCell(), if(state.player==NormalPlayer.WHITE) "WHITE" else "BLACK"))
                     }else{
                         break@loop
