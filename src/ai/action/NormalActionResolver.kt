@@ -23,7 +23,7 @@ class NormalActionResolver : ActionResolver {
         return res
     }
 
-    fun moveablePawn(c: NormalBoardCell, p: NormalPlayer): Boolean{
+    fun moveablePawn(c: NormalBoardCell, p: NormalPlayer): Boolean{ // TODO + move king
         if(p == NormalPlayer.WHITE){
             if(c.content == CellContent.WHITE || c.content == CellContent.KING){
                 return true

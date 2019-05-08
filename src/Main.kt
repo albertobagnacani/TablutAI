@@ -48,7 +48,7 @@ fun main(args : Array<String>) {
         var game = NormalTablutGame(client.state, initialState as NormalState, StandardGameRulesFactory().createFromGameVersion(gameVersion, client.state) as NormalGameRules, NormalActionResolver())
         //var search = TablutIterativeDeepeningAlphaBetaSearch(game, utilMin, utilMax, seconds, heuristic)
         var search = IterativeDeepeningAlphaBetaSearch(game, utilMin, utilMax, seconds)
-        var action = search.makeDecision(client.state) // TODO + perchè non genera bene l'albero? Goal test errato?
+        var action = search.makeDecision(client.state) // TODO + perchè non genera bene l'albero? Goal test errato? Mosse errate?
         val metrics = search.metrics
         println(metrics)
         client.write(action)
