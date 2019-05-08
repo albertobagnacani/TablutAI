@@ -1,8 +1,11 @@
 import ai.action.ActionResolver
 import ai.action.NormalActionResolver
 import ai.action.NormalTablutAction
+import ai.heuristic.BlackNormalTablutHeuristic
+import ai.heuristic.WhiteNormalTablutHeuristic
 import ai.strategy.adversarial.NormalTablutGame
 import ai.strategy.adversarial.TablutGame
+import ai.strategy.adversarial.TablutIterativeDeepeningAlphaBetaSearch
 import aima.core.search.adversarial.IterativeDeepeningAlphaBetaSearch
 import aima.core.search.framework.SearchAgent
 import aima.core.search.framework.problem.Problem
@@ -17,6 +20,7 @@ import model.state.rules.GameRulesFactory
 import model.state.rules.NormalGameRules
 import model.state.rules.StandardGameRulesFactory
 
+// TODO1 move functions to interfaces
 fun main(args : Array<String>) {
     val boardTypePath = "src/resources/normalBoardType.txt"
     val boardContentPath = "src/resources/normalBoardContent.txt"
@@ -25,6 +29,7 @@ fun main(args : Array<String>) {
     val player = if(args[0] == "White") {NormalPlayer.WHITE} else {NormalPlayer.BLACK}
     val seconds = args[1].toInt()-10
 
+    val heuristic = if(player == NormalPlayer.WHITE) WhiteNormalTablutHeuristic() else BlackNormalTablutHeuristic()
     val initialState = StandardStateFactory().createFromGameVersion(gameVersion, boardTypePath, boardContentPath)
     val client = TablutClient(player, "Franco", StandardStateFactory().createFromGameVersion(gameVersion, boardTypePath, boardContentPath))
 
@@ -41,8 +46,9 @@ fun main(args : Array<String>) {
     while(true) {
         // eval action
         var game = NormalTablutGame(client.state, initialState as NormalState, StandardGameRulesFactory().createFromGameVersion(gameVersion, client.state) as NormalGameRules, NormalActionResolver())
-        var search = IterativeDeepeningAlphaBetaSearch(game, utilMin, utilMax, seconds)
+        var search = TablutIterativeDeepeningAlphaBetaSearch(game, utilMin, utilMax, seconds, heuristic)
         var action = search.makeDecision(client.state)
+        val metrics = search.metrics
         client.write(action)
         client.read() // Read what my action did
         client.read()

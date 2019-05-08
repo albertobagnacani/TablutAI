@@ -21,6 +21,7 @@ class NormalActionResolver : ActionResolver {
 
         return res
     }
+    // TODO pedine possono andare su caselle blu?
 
     // For every direction (up, right, down, left), returns the number of cells a pawn can go
     fun availableActions(state: NormalState, bc: NormalBoardCell): List<Action>{
