@@ -86,7 +86,7 @@ class NormalGameRules(val s: NormalState) : GameRules {
         return false
     }
 
-    fun isKingCapturedLikeKnight(): Boolean{ // TODO + cattura attiva?
+    fun isKingCapturedLikeKnight(): Boolean{ // TODO cattura attiva?
         // For each black that has the king adj, look if in the same line there's another black that captures the king
         for(black in s.board.getBlackBoardCellAdjKing()){ // TODO1 ricalculated for nothing, use variable
             if(s.board.getBoardCellFromCoord(

@@ -58,7 +58,7 @@ class NormalTablutGame(val state: State, val initialState: NormalState, val game
     // TODO1 hardcoded 1 and 0
     // TODO2 patta come hash dello stato
     override fun getUtility(state: State, player: Player): Double {
-        return if(NormalGameRules(state as NormalState).isTerminal() && initialState.player == state.player) 1.0 else 0.0 // TODO patta
+        return if(NormalGameRules(state as NormalState).isTerminal() && initialState.player == state.player) 1.0 else -1.0 // TODO patta
     }
 
     /**

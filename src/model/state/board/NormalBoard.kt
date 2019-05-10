@@ -63,7 +63,7 @@ data class NormalBoard<out T>(override val rows: Int, override val cols: Int, va
 
     fun initializeContent(f: File){
         var r = 0
-        var c = 0
+        var c: Int
         File(f.name).forEachLine { item ->
             c = 0
             item.split(" ").forEach {
@@ -77,6 +77,12 @@ data class NormalBoard<out T>(override val rows: Int, override val cols: Int, va
             }
             r++
         }
+    }
+
+    fun emptyContent(){
+        for(i in 0..rows-1)
+            for(j in 0..cols-1)
+                board[i][j].content = CellContent.NOTHING
     }
 
     // TODO1 enum su toShow

@@ -17,17 +17,18 @@ data class NormalState(override var board: NormalBoard<NormalBoardCell>, overrid
     }
 
     fun applyAction(a: NormalTablutAction): State{
+        var state = this.copy()
         val fromCoord = NormalCoordinate().fromCell(a.from)
         val toCoord = NormalCoordinate().fromCell(a.to)
 
-        val oldCell = this.board.getElement(fromCoord)
-        val tmp = oldCell.content
+        var oldCell = state.board.getElement(fromCoord)
+        var tmp = oldCell.content
         oldCell.content = CellContent.NOTHING
-        val newCell = this.board.getElement(toCoord)
+        var newCell = state.board.getElement(toCoord)
         newCell.content = tmp
 
-        this.board.setElement(fromCoord, oldCell) // Empty the first
-        this.board.setElement(toCoord, newCell) // Fill the second
-        return this
+        //state.board.setElement(fromCoord, oldCell) // Empty the first
+        //state.board.setElement(toCoord, newCell) // Fill the second
+        return state
     }
 }

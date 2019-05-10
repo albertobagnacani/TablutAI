@@ -19,6 +19,7 @@ import model.state.player.Player
 import model.state.rules.GameRulesFactory
 import model.state.rules.NormalGameRules
 import model.state.rules.StandardGameRulesFactory
+import java.lang.Thread.sleep
 
 // TODO1 move functions to interfaces
 fun main(args : Array<String>) {
@@ -31,7 +32,7 @@ fun main(args : Array<String>) {
 
     val heuristic = if(player == NormalPlayer.WHITE) WhiteNormalTablutHeuristic() else BlackNormalTablutHeuristic()
     val initialState = StandardStateFactory().createFromGameVersion(gameVersion, boardTypePath, boardContentPath)
-    val client = TablutClient(player, "Franco", StandardStateFactory().createFromGameVersion(gameVersion, boardTypePath, boardContentPath))
+    val client = TablutClient(player, "Franco", StandardStateFactory().createFromGameVersion(gameVersion, boardTypePath, boardContentPath) as NormalState)
 
     client.declareName()
     client.read() // Initial state
@@ -42,17 +43,20 @@ fun main(args : Array<String>) {
 
     val utilMin = -1.0
     val utilMax = 1.0
+    //TODO + con nero ogni tanto errore: stato ancora da sistemare
 
     while(true) {
         // eval action
         var game = NormalTablutGame(client.state, initialState as NormalState, StandardGameRulesFactory().createFromGameVersion(gameVersion, client.state) as NormalGameRules, NormalActionResolver())
-        //var search = TablutIterativeDeepeningAlphaBetaSearch(game, utilMin, utilMax, seconds, heuristic)
-        var search = IterativeDeepeningAlphaBetaSearch(game, utilMin, utilMax, seconds)
-        var action = search.makeDecision(client.state) // TODO + perchè non genera bene l'albero? Goal test errato? Mosse errate?
+        var search = TablutIterativeDeepeningAlphaBetaSearch(game, utilMin, utilMax, seconds, heuristic)
+        //var search = IterativeDeepeningAlphaBetaSearch(game, utilMin, utilMax, seconds)
+        var action = search.makeDecision(client.state) // TODO + perchè non genera bene l'albero? Goal test errato?
+        println(action)
+        client.state.board.printBoard(2)
         val metrics = search.metrics
         println(metrics)
         client.write(action)
         client.read() // Read what my action did
-        client.read()
+        client.read() // Read the other action
     }
 }

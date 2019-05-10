@@ -3,6 +3,7 @@ package serialization
 import model.state.NormalState
 import model.state.State
 import model.state.board.CellContent
+import model.state.board.NormalBoard
 import model.state.player.NormalPlayer
 import java.io.File
 import java.util.regex.Pattern
@@ -10,13 +11,14 @@ import java.util.regex.Pattern
 class JSONState(val newStateString: String, val oldState: NormalState) {
     //state = this.gson.fromJson(read, NormalState::class.java) // TODO1 fare con GSON
     fun deserialize(): State{ // TODO1 migliorare
-        var res = oldState
+        var res = oldState.copy()
         val words = listOf("EMPTY", "WHITE", "BLACK", "KING")
 
         val a = newStateString.split("\"")
         val b = a.filter { s -> s == "EMPTY" || s == "WHITE" || s == "BLACK" || s == "KING" }
 
         val tmp = File("tmpNormalBoardContent.txt")
+        tmp.writeText("")
         var char = ""
         for(i in 0..b.size-2) {
             when (b[i]) {
@@ -34,7 +36,11 @@ class JSONState(val newStateString: String, val oldState: NormalState) {
 
         //res.board.initializeCoords()
         //res.board.initializeType()
+        res.board.emptyContent()
         res.board.initializeContent(tmp)
+        //println(newStateString)
+        tmp.forEachLine { println(it) }
+        //res.board.printBoard(2)
         tmp.delete()
         res.player = if(b[b.size-1] == "WHITE") NormalPlayer.WHITE else NormalPlayer.BLACK
 

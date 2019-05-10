@@ -12,8 +12,8 @@ class NormalActionResolver : ActionResolver {
 
         for(i in 0..s.board.rows-1){
             for(j in 0..s.board.cols-1){
-                //if(moveablePawn(state.board.board[i][j], state.player)) {
-                if(state.board.board[i][j].content.name == s.player.name){
+                if(moveablePawn(state.board.board[i][j], state.player)) {
+                //if(state.board.board[i][j].content.name == s.player.name){
                     //val bc = state.board[2,3] //TODO1 can access like this everywhere
                     res.addAll(availableActions(state, state.board.board[i][j]))
                 }
@@ -23,7 +23,7 @@ class NormalActionResolver : ActionResolver {
         return res
     }
 
-    fun moveablePawn(c: NormalBoardCell, p: NormalPlayer): Boolean{ // TODO + move king
+    fun moveablePawn(c: NormalBoardCell, p: NormalPlayer): Boolean{
         if(p == NormalPlayer.WHITE){
             if(c.content == CellContent.WHITE || c.content == CellContent.KING){
                 return true

@@ -6,4 +6,5 @@ enum class CellType{
         CAMP,
         CASTLE,
         EXIT
+
 }

@@ -64,6 +64,7 @@ class TablutIterativeDeepeningAlphaBetaSearch(val game: NormalTablutGame, val ut
      * Primitive operation for action ordering. This implementation preserves the original order (provided by the game).
      */
     override fun orderActions(state: State, actions: MutableList<Action>, player: Player, depth: Int): MutableList<Action> {
+        super.orderActions(state, actions, player, depth).shuffle()
         return super.orderActions(state, actions, player, depth)
     }
 }

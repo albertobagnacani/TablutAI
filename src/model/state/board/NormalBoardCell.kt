@@ -5,6 +5,6 @@ data class NormalBoardCell(var coordinate: NormalCoordinate, var type: CellType,
     constructor() : this(NormalCoordinate(0,0), CellType.NORMAL, CellContent.NOTHING)
 
     override fun toString(): String {
-        return "NormalBoardCell(coordinate=$coordinate, type=$type, content=$content)"
+        return "NormalBoardCell(coordinate=$coordinate, type=${type.name}, content=${content.name})"
     }
 }

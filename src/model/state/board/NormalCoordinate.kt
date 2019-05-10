@@ -41,15 +41,22 @@ data class NormalCoordinate(override val x: Int, override val y: Int) : Coordina
         return "NormalCoordinate(x=$x, y=$y)"
     }
 
+    // Coordinate(3, 0)
+    // res: "a4"
     fun returnCell(): String{
-        return arr[y]+(x+1)  // x+1 because TablutCompetition's server board starts from 1 (and not 0)
+        val resY = arr[this.y]
+        val resX = this.x+1
+        return resY+""+resX  // x+1 because TablutCompetition's server board starts from 1 (and not 0)
     }
 
+    // s: a4
+    // result: Coordinate(3, 0)
     fun fromCell(s: String): Coordinate{
         val y = arr.indexOf(s.substring(0, 1))
-        val x = s.substring(1, 2).toInt()
+        var x = s.substring(1, 2).toInt()
+        x = x-1
 
-        return NormalCoordinate(x-1, y) // x-1 like before
+        return NormalCoordinate(x, y) // x-1 like before
     }
 
     //fun moveLeft(c: Coordinate): Coordinate{}

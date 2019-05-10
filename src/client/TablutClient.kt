@@ -19,7 +19,7 @@ import java.net.Socket
 import java.util.*
 import java.util.regex.Pattern
 
-data class TablutClient(val player: NormalPlayer, val name: String, var state: State) {
+data class TablutClient(val player: NormalPlayer, val name: String, var state: NormalState) {
     private var port : Int
     private var socket : Socket
     private var dos : DataOutputStream
@@ -51,7 +51,7 @@ data class TablutClient(val player: NormalPlayer, val name: String, var state: S
 
     fun read(){
         val read = StreamUtils.readString(dis)
-        this.state = JSONState(read, state as NormalState).deserialize()
+        this.state = JSONState(read, state as NormalState).deserialize() as NormalState
     }
 
     fun declareName(){
