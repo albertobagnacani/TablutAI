@@ -15,7 +15,7 @@ class JSONState(val newStateString: String, val oldState: NormalState) {
         val words = listOf("EMPTY", "WHITE", "BLACK", "KING")
 
         val a = newStateString.split("\"")
-        val b = a.filter { s -> s == "EMPTY" || s == "WHITE" || s == "BLACK" || s == "KING" }
+        val b = a.filter { s -> s == "EMPTY" || s == "WHITE" || s == "BLACK" || s == "KING" || s == "THRONE" }
 
         val tmp = File("tmpNormalBoardContent.txt")
         tmp.writeText("")
@@ -26,6 +26,7 @@ class JSONState(val newStateString: String, val oldState: NormalState) {
                 "BLACK" -> char = "B"
                 "WHITE" -> char = "W"
                 "KING" -> char = "K"
+                "THRONE" -> char = "E"
             }
             if(i==0 || (i+1)%9!=0){
                 tmp.appendText(char+" ")
@@ -39,7 +40,7 @@ class JSONState(val newStateString: String, val oldState: NormalState) {
         res.board.emptyContent()
         res.board.initializeContent(tmp)
         //println(newStateString)
-        tmp.forEachLine { println(it) }
+        //tmp.forEachLine { println(it) }
         //res.board.printBoard(2)
         tmp.delete()
         res.player = if(b[b.size-1] == "WHITE") NormalPlayer.WHITE else NormalPlayer.BLACK

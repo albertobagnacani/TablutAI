@@ -43,16 +43,14 @@ fun main(args : Array<String>) {
 
     val utilMin = -1.0
     val utilMax = 1.0
-    //TODO + con nero ogni tanto errore: stato ancora da sistemare
 
     while(true) {
         // eval action
         var game = NormalTablutGame(client.state, initialState as NormalState, StandardGameRulesFactory().createFromGameVersion(gameVersion, client.state) as NormalGameRules, NormalActionResolver())
         var search = TablutIterativeDeepeningAlphaBetaSearch(game, utilMin, utilMax, seconds, heuristic)
         //var search = IterativeDeepeningAlphaBetaSearch(game, utilMin, utilMax, seconds)
-        var action = search.makeDecision(client.state) // TODO + perchè non genera bene l'albero? Goal test errato?
+        var action = search.makeDecision(client.state) // TODO + perchè non genera bene l'albero? Goal test errato (sembra di no)?
         println(action)
-        client.state.board.printBoard(2)
         val metrics = search.metrics
         println(metrics)
         client.write(action)

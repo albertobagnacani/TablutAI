@@ -17,24 +17,24 @@ class BlackNormalTablutHeuristic : NormalTablutHeuristic {
 
         if(state.board.getKingBoardCell().coordinate.equals(NormalCoordinate.getMiddleCoordinate())){
             when(surrounding){
-                4 -> res = -1.0
-                3 -> res = -0.5
+                4 -> res = 1.0
+                3 -> res = 0.5
                 2 -> res = 0.0
-                1 -> res = 0.5
-                0 -> res = 1.0
+                1 -> res = -0.5
+                0 -> res = -1.0
             }
         }else if(NormalCoordinate(NormalCoordinate.getMiddleCoordinate()).adjCoordinates().contains(state.board.getKingBoardCell().coordinate)){
             when(surrounding){
-                3 -> res = -1.0
-                2 -> res = -(1.toDouble()/3.toDouble())
-                1 -> res = (1.toDouble()/3.toDouble())
-                0 -> res = 1.0
+                3 -> res = 1.0
+                2 -> res = (1.toDouble()/3.toDouble())
+                1 -> res = -(1.toDouble()/3.toDouble())
+                0 -> res = -1.0
             }
         }else{
             when(surrounding){
-                2 -> res = -1.0
+                2 -> res = 1.0
                 1 -> res = 0.0
-                0 -> res = 1.0
+                0 -> res = -1.0
             }
         }
 
