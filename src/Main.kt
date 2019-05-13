@@ -23,8 +23,8 @@ import java.lang.Thread.sleep
 
 // TODO1 move functions to interfaces
 fun main(args : Array<String>) {
-    val boardTypePath = "src/resources/normalBoardType.txt"
-    val boardContentPath = "src/resources/normalBoardContent.txt"
+    val boardTypePath = "resources/normalBoardType.txt"
+    val boardContentPath = "resources/normalBoardContent.txt"
     val gameVersion = "Normal"
 
     val player = if(args[0] == "White") {NormalPlayer.WHITE} else {NormalPlayer.BLACK}
@@ -49,7 +49,7 @@ fun main(args : Array<String>) {
         var game = NormalTablutGame(client.state, initialState as NormalState, StandardGameRulesFactory().createFromGameVersion(gameVersion, client.state) as NormalGameRules, NormalActionResolver())
         var search = TablutIterativeDeepeningAlphaBetaSearch(game, utilMin, utilMax, seconds, heuristic)
         //var search = IterativeDeepeningAlphaBetaSearch(game, utilMin, utilMax, seconds)
-        var action = search.makeDecision(client.state) // TODO + perchè non genera bene l'albero? Goal test errato (sembra di no)?
+        var action = search.makeDecision(client.state)
         println(action)
         val metrics = search.metrics
         println(metrics)

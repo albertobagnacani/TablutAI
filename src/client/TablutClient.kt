@@ -41,6 +41,7 @@ data class TablutClient(val player: NormalPlayer, val name: String, var state: N
         }
 
         socket = Socket("localhost", port)
+        //socket = Socket("192.168.43.172", port)
         dos = DataOutputStream(socket.getOutputStream())
         dis = DataInputStream(socket.getInputStream())
     }

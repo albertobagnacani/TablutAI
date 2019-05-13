@@ -94,10 +94,36 @@ data class NormalBoard<out T>(override val rows: Int, override val cols: Int, va
                     0 -> print("" + board[i][j] + " ")
                     1 -> print("" + board[i][j]?.type + " ")
                     2 -> print("" + board[i][j]?.content + " ")
+                    3 -> {
+                        when(board[i][j]?.content){
+                            CellContent.NOTHING -> print("" + "_" + " ")
+                            CellContent.BLACK -> print("" + "B" + " ")
+                            CellContent.WHITE -> print("" + "W" + " ")
+                            CellContent.KING -> print("" + "K" + " ")
+                        }
+                    }
                 }
             }
             println()
         }
+    }
+
+    fun printBoardString(): String{
+        var res = ""
+
+        for(i in 0..rows-1) {
+            for (j in 0..cols - 1) {
+                when(board[i][j].content){
+                    CellContent.NOTHING -> res = res.plus("" + "_" + " ")
+                    CellContent.BLACK -> res = res.plus("" + "B" + " ")
+                    CellContent.WHITE -> res = res.plus("" + "W" + " ")
+                    CellContent.KING -> res = res.plus("" + "K" + " ")
+                }
+            }
+            res = res.plus("\n")
+        }
+
+        return res
     }
 
     fun getElement(c: Coordinate) : NormalBoardCell{
@@ -204,6 +230,6 @@ data class NormalBoard<out T>(override val rows: Int, override val cols: Int, va
     }
 
     override fun toString(): String {
-        return "NormalBoard(rows=$rows, cols=$cols, boardTypePath='$boardTypePath', board=${Arrays.toString(board)})"
+        return printBoardString()
     }
 }

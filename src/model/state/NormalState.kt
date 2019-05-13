@@ -13,7 +13,7 @@ import model.state.player.Player
 data class NormalState(override var board: NormalBoard<NormalBoardCell>, override var player: NormalPlayer) : State{
     //constructor() : this(NormalBoard(0, 0, "", ""), NormalPlayer.WHITE)
     override fun toString(): String {
-        return "NormalState(board=$board, player=$player)"
+        return "NormalState(board=\n$board, player=$player)"
     }
 
     fun applyAction(a: NormalTablutAction): State{
@@ -27,8 +27,17 @@ data class NormalState(override var board: NormalBoard<NormalBoardCell>, overrid
         var newCell = state.board.getElement(toCoord)
         newCell.content = tmp
 
+        state.player = switchPlayer(state.player)
+
+        // TODO + se cattura?
         //state.board.setElement(fromCoord, oldCell) // Empty the first
         //state.board.setElement(toCoord, newCell) // Fill the second
         return state
+    }
+
+    // TODO move
+    fun switchPlayer(player: NormalPlayer): NormalPlayer{
+        if(player == NormalPlayer.WHITE) return NormalPlayer.BLACK
+        else return NormalPlayer.WHITE
     }
 }

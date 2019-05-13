@@ -10,6 +10,7 @@ import model.state.player.Player
 import model.state.rules.GameRules
 import model.state.rules.NormalGameRules
 
+// TODO + perchè non genera bene l'albero? Goal test errato (sembra di no)? GetUtility (chiedere quella di Pelle) [Restituisce min o max value anche se logicamente non è così? Se il re è nella casella azzurra come bianco maxvalue, come nero minvalue]?
 class NormalTablutGame(val state: State, val initialState: NormalState, val gameRules: NormalGameRules, val actionResolver: ActionResolver) : TablutGame {
     /**
      * The initial state, which specifies how the game is set up at the start
@@ -39,7 +40,10 @@ class NormalTablutGame(val state: State, val initialState: NormalState, val game
      * Returns the set of legal moves in a state.
      */
     override fun getActions(state: State): List<Action> {
-        return actionResolver.actions(state)
+        val res = actionResolver.actions(state)
+        println((state as NormalState).board.printBoard(3))
+        println(res.size)
+        return res
     }
 
     /**
@@ -57,8 +61,19 @@ class NormalTablutGame(val state: State, val initialState: NormalState, val game
     // TODO1 sistemare NormalGameRules(state).isTerminal()
     // TODO1 hardcoded 1 and 0
     // TODO2 patta come hash dello stato
-    override fun getUtility(state: State, player: Player): Double {
-        return if(NormalGameRules(state as NormalState).isTerminal() && initialState.player == state.player) 1.0 else -1.0 // TODO patta
+    override fun getUtility(state: State, player: Player): Double {// TODO patta
+        var res: Double
+
+        if(NormalGameRules(state as NormalState).isTerminal()){
+            if(initialState.player == state.player) {
+                res = 1.0
+            }else{
+                res = -1.0
+            }
+        }else{
+            res = 0.5
+        }
+        return res
     }
 
     /**
@@ -68,6 +83,7 @@ class NormalTablutGame(val state: State, val initialState: NormalState, val game
      */
     // TODO1 why these cast? Everywhere
     override fun isTerminal(state: State): Boolean {
-        return (gameRules as NormalGameRules).isTerminal()
+        val res = NormalGameRules(state as NormalState).isTerminal() // TODO+ troppe poche azioni? Qualcosa che non cambia (tipo GameRules non usava stato aggiornato)?
+        return res
     }
 }
