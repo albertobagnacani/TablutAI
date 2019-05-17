@@ -6,6 +6,33 @@ import model.state.board.*
 import model.state.player.NormalPlayer
 
 class NormalActionResolver : ActionResolver {
+    fun applyAction(state: NormalState, a: NormalTablutAction): State{
+        val s = NormalState(state.board.copy(), state.player)
+        val fromCoord = NormalCoordinate().fromCell(a.from)
+        val toCoord = NormalCoordinate().fromCell(a.to)
+
+        var oldCell = s.board.getElement(fromCoord)
+        var tmp = oldCell.content
+        oldCell.content = CellContent.NOTHING
+        var newCell = s.board.getElement(toCoord)
+        newCell.content = tmp
+
+        s.player = switchPlayer(s.player)
+
+        //state.board.setElement(fromCoord, oldCell) // Empty the first
+        //state.board.setElement(toCoord, newCell) // Fill the second
+        return s
+    }
+
+    fun switchPlayer(player: NormalPlayer): NormalPlayer{
+        if(player == NormalPlayer.WHITE) {
+            return NormalPlayer.BLACK
+        }
+        else{
+            return NormalPlayer.WHITE
+        }
+    }
+
     override fun actions(s: State): List<Action> {
         val state = s as NormalState
         var res = mutableListOf<Action>()
@@ -15,7 +42,8 @@ class NormalActionResolver : ActionResolver {
                 if(moveablePawn(state.board.board[i][j], state.player)) {
                 //if(state.board.board[i][j].content.name == s.player.name){
                     //val bc = state.board[2,3] //TODO1 can access like this everywhere
-                    res.addAll(availableActions(state, state.board.board[i][j]))
+                    var actions = availableActions(state, state.board.board[i][j])
+                    res.addAll(actions)
                 }
             }
         }
@@ -54,17 +82,17 @@ class NormalActionResolver : ActionResolver {
         // Low the x until is 0
         val x = bc.coordinate.x
 
-        loop@for(i in x-1 downTo 0){ // TODO attenzione non andare fuori dalla board con x-1 (per tutti i casi, con relative x/y(+/-1))
+        loop@for(i in x-1 downTo 0){ // TODO1 attenzione non andare fuori dalla board con x-1 (per tutti i casi, con relative x/y(+/-1))
             var cell = state.board.board[i][bc.coordinate.y]
             when(bc.content){
                 CellContent.WHITE ->{
                     if(cell.content == CellContent.NOTHING && (cell.type == CellType.NORMAL || cell.type == CellType.EXIT)){
-                        res.add(NormalTablutAction(NormalCoordinate(bc.coordinate).returnCell(), NormalCoordinate(i, bc.coordinate.y).returnCell(), if(state.player==NormalPlayer.WHITE) "WHITE" else "BLACK")) // TODO this player or other turn player? // TODO1 fare "toString" enum (anche altri casi)
+                        res.add(NormalTablutAction(NormalCoordinate(bc.coordinate).returnCell(), NormalCoordinate(i, bc.coordinate.y).returnCell(), if(state.player==NormalPlayer.WHITE) "WHITE" else "BLACK")) // TODO1 fare "toString" enum (anche altri casi)
                     }else{
                         break@loop
                     }
                 }
-                CellContent.BLACK ->{ // TODO if black stays inside a camp, the cell can be a camp (anche altri casi)
+                CellContent.BLACK ->{ // TODO1 if black stays inside a camp, the cell can be a camp (anche altri casi)
                     if(cell.content == CellContent.NOTHING && (cell.type == CellType.NORMAL || cell.type == CellType.EXIT)){
                         res.add(NormalTablutAction(NormalCoordinate(bc.coordinate).returnCell(), NormalCoordinate(i, bc.coordinate.y).returnCell(), if(state.player==NormalPlayer.WHITE) "WHITE" else "BLACK"))
                     }else{

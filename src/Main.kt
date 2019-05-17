@@ -19,6 +19,7 @@ import model.state.player.Player
 import model.state.rules.GameRulesFactory
 import model.state.rules.NormalGameRules
 import model.state.rules.StandardGameRulesFactory
+import java.io.File
 import java.lang.Thread.sleep
 
 // TODO1 move functions to interfaces
@@ -28,7 +29,7 @@ fun main(args : Array<String>) {
     val gameVersion = "Normal"
 
     val player = if(args[0] == "White") {NormalPlayer.WHITE} else {NormalPlayer.BLACK}
-    val seconds = args[1].toInt()-10
+    val seconds = args[1].toInt()-2
 
     val heuristic = if(player == NormalPlayer.WHITE) WhiteNormalTablutHeuristic() else BlackNormalTablutHeuristic()
     val initialState = StandardStateFactory().createFromGameVersion(gameVersion, boardTypePath, boardContentPath)
@@ -47,10 +48,10 @@ fun main(args : Array<String>) {
     while(true) {
         // eval action
         var game = NormalTablutGame(client.state, initialState as NormalState, StandardGameRulesFactory().createFromGameVersion(gameVersion, client.state) as NormalGameRules, NormalActionResolver())
-        var search = TablutIterativeDeepeningAlphaBetaSearch(game, utilMin, utilMax, seconds, heuristic)
-        //var search = IterativeDeepeningAlphaBetaSearch(game, utilMin, utilMax, seconds)
+        //var search = TablutIterativeDeepeningAlphaBetaSearch(game, utilMin, utilMax, seconds, heuristic)
+        var search = IterativeDeepeningAlphaBetaSearch(game, utilMin, utilMax, seconds)
         var action = search.makeDecision(client.state)
-        println(action)
+        //println(action)
         val metrics = search.metrics
         println(metrics)
         client.write(action)
