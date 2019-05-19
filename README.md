@@ -18,5 +18,5 @@ Example: java -jar Tablut.jar White 60
 
 Example: java -jar Tablut.jar Black 60
 
-####Example of the resources folder
+#### Example of the resources folder
 ![alt text](resourceExample.png)
