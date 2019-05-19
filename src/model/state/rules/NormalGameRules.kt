@@ -1,17 +1,14 @@
 package model.state.rules
 
 import model.state.NormalState
-import model.state.StandardStateFactory
-import model.state.State
 import model.state.board.CellContent
 import model.state.board.CellType
 import model.state.board.NormalBoardCell
 import model.state.board.NormalCoordinate
 import model.state.player.NormalPlayer
 
-// TODO1 dep inj?
 class NormalGameRules(val s: NormalState) : GameRules {
-    // TODO1 add these?
+    // TODOg add these?
     /*
     – Un giocatore non può muovere nessuna pedina in nessuna direzione: sconfitta di quel giocatore
     – Si raggiunge uno stato già raggiunto in precedenza: pareggio
@@ -30,7 +27,7 @@ class NormalGameRules(val s: NormalState) : GameRules {
     }
 
     fun isKingInCastleAndSurrounded(): Boolean{
-        val surroundedKingCoordinates = NormalCoordinate(s.board.getKingBoardCell().coordinate).adjCoordinates()
+        //val surroundedKingCoordinates = NormalCoordinate(s.board.getKingBoardCell().coordinate).adjCoordinates()
 
         //if(board.getBlackBoardCellAdjKing().containsAll(surroundedKingCoordinates)){
         if(s.board.getBlackBoardCellAdjKing().size >= 4){
@@ -86,9 +83,9 @@ class NormalGameRules(val s: NormalState) : GameRules {
         return false
     }
 
-    fun isKingCapturedLikeKnight(): Boolean{ // TODO1 cattura attiva?
+    fun isKingCapturedLikeKnight(): Boolean{ // TODOg cattura attiva?
         // For each black that has the king adj, look if in the same line there's another black that captures the king
-        for(black in s.board.getBlackBoardCellAdjKing()){ // TODO1 ricalculated for nothing, use variable
+        for(black in s.board.getBlackBoardCellAdjKing()){ // TODO2 ricalculated for nothing, use variable
             if(s.board.getBoardCellFromCoord(
                     NormalCoordinate.getThirdCoordinateFromTwo(
                         s.board.getKingBoardCell().coordinate,
@@ -101,18 +98,18 @@ class NormalGameRules(val s: NormalState) : GameRules {
         return false
     }
 
-    fun isTerminal(): Boolean {
+    override fun isTerminal(): Boolean {
         if(s.player == NormalPlayer.WHITE){ // The king arrives on the exit
             return isKingEscaped()
         }else{ // The king has been captured by blacks
-            // TODO1 if migliorabile
+            // TODO2 if migliorabile
             if(s.board.getKingBoardCell().coordinate.equals(NormalCoordinate.getMiddleCoordinate())){ // Case 1)
                 return isKingInCastleAndSurrounded()
             }else if(NormalCoordinate(NormalCoordinate.getMiddleCoordinate()).adjCoordinates().contains(s.board.getKingBoardCell().coordinate)){ // The king is in an castle's adj cell Case 2)
                 return isKingInAdjCastleAndSurrounded()
             }else if(s.board.getKingBoardCell() in s.board.getCampBoardCellsAdjKing()){ // Case 3)
                 return isKingCapturedAdjCamp()
-            }else if(!s.board.getBlackBoardCellAdjKing().isEmpty()){ // Case 4 // TODO1 cattura multipla?
+            }else if(!s.board.getBlackBoardCellAdjKing().isEmpty()){ // Case 4 // TODOg cattura multipla?
                 return isKingCapturedLikeKnight()
             }
         }

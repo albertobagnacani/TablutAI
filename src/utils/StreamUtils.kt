@@ -4,7 +4,7 @@ import java.io.DataInputStream
 import java.io.DataOutputStream
 import java.nio.charset.StandardCharsets
 
-
+// Imported from another resource, not mine
 object StreamUtils {
     /**
      * Questa classe offre dei metodi per inviare e ricevere stringhe attraverso delle socket

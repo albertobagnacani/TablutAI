@@ -2,17 +2,13 @@ package serialization
 
 import model.state.NormalState
 import model.state.State
-import model.state.board.CellContent
-import model.state.board.NormalBoard
 import model.state.player.NormalPlayer
 import java.io.File
-import java.util.regex.Pattern
 
 class JSONState(val newStateString: String, val oldState: NormalState) {
     //state = this.gson.fromJson(read, NormalState::class.java) // TODO1 fare con GSON
-    fun deserialize(): State{ // TODO1 migliorare
+    fun deserialize(): State{ // TODO2 migliorare
         var res = oldState.copy()
-        val words = listOf("EMPTY", "WHITE", "BLACK", "KING")
 
         val a = newStateString.split("\"")
         val b = a.filter { s -> s == "EMPTY" || s == "WHITE" || s == "BLACK" || s == "KING" || s == "THRONE" }

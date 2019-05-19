@@ -1,7 +1,6 @@
 package model.state.board
 
-// TODO1 factory?
-data class NormalBoardCell(var coordinate: NormalCoordinate, var type: CellType, var content: CellContent) : BoardCell {
+data class NormalBoardCell(override var coordinate: NormalCoordinate, override var type: CellType, override var content: CellContent) : BoardCell {
     constructor() : this(NormalCoordinate(0,0), CellType.NORMAL, CellContent.NOTHING)
 
     override fun toString(): String {

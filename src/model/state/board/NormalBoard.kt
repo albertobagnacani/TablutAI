@@ -1,11 +1,7 @@
 package model.state.board
 
-import com.google.gson.annotations.Expose
-import com.google.gson.annotations.SerializedName
 import java.io.File
-import java.util.*
 
-// TODO1 factory?
 data class NormalBoard<out T>(override val rows: Int, override val cols: Int, val boardTypePath: String, val boardContentPath: String) : Board<NormalBoardCell>, ArrayMatrix<NormalBoardCell>(rows, cols, Array(rows){Array(cols){NormalBoardCell()}}){
     //@SerializedName("board")
     //@Expose
@@ -85,17 +81,15 @@ data class NormalBoard<out T>(override val rows: Int, override val cols: Int, va
                 board[i][j].content = CellContent.NOTHING
     }
 
-    // TODO1 enum su toShow
     fun printBoard(toShow: Int){
         for(i in 0..rows-1) {
             for (j in 0..cols - 1) {
-                // TODO1 bruttino "" per inferire stringa
                 when(toShow){
                     0 -> print("" + board[i][j] + " ")
-                    1 -> print("" + board[i][j]?.type + " ")
-                    2 -> print("" + board[i][j]?.content + " ")
+                    1 -> print("" + board[i][j].type + " ")
+                    2 -> print("" + board[i][j].content + " ")
                     3 -> {
-                        when(board[i][j]?.content){
+                        when(board[i][j].content){
                             CellContent.NOTHING -> print("" + "_" + " ")
                             CellContent.BLACK -> print("" + "B" + " ")
                             CellContent.WHITE -> print("" + "W" + " ")
@@ -153,7 +147,7 @@ data class NormalBoard<out T>(override val rows: Int, override val cols: Int, va
         return NormalBoardCell(c, board[c.x][c.y].type, board[c.x][c.y].content)
     }
 
-    // TODO1 can do in a better way
+    // TODO2 can do in a better way
     fun getBoardCellsFromCoords(coordinateList: List<NormalCoordinate>): List<NormalBoardCell>{
         var res = mutableListOf<NormalBoardCell>()
 

@@ -1,6 +1,5 @@
 package serialization
 
-import aima.core.agent.Action
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 

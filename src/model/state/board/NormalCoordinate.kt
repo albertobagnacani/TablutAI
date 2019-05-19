@@ -5,7 +5,6 @@ data class NormalCoordinate(override val x: Int, override val y: Int) : Coordina
         val arr = arrayOf("a", "b", "c", "d", "e", "f", "g", "h", "i")
 
         fun getMiddleCoordinate() : Coordinate = NormalCoordinate(4, 4)
-        // TODO1 attenzione: potrei andare fuori dalla board. Exception quando errori?
         // TODO1 fare come metodo non statico?
         fun getThirdCoordinateFromTwo(mainCoordinate: Coordinate, secondaryCoordinate: Coordinate): NormalCoordinate{
             if(mainCoordinate.x==secondaryCoordinate.x) {
@@ -38,7 +37,7 @@ data class NormalCoordinate(override val x: Int, override val y: Int) : Coordina
     }
 
     override fun toString(): String {
-        return "NormalCoordinate(x=$x, y=$y)"
+        return returnCell()
     }
 
     // Coordinate(3, 0)

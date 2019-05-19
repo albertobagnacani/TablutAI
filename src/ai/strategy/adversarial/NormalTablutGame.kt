@@ -1,13 +1,12 @@
 package ai.strategy.adversarial
 
-import ai.action.*
+import ai.action.Action
+import ai.action.NormalActionResolver
+import ai.action.NormalTablutAction
 import model.state.NormalState
 import model.state.State
-
-import model.state.StateFactory
 import model.state.player.NormalPlayer
 import model.state.player.Player
-import model.state.rules.GameRules
 import model.state.rules.NormalGameRules
 
 class NormalTablutGame(val state: State, val initialState: NormalState, val gameRules: NormalGameRules, val actionResolver: NormalActionResolver) : TablutGame {
@@ -32,7 +31,6 @@ class NormalTablutGame(val state: State, val initialState: NormalState, val game
         return res
     }
 
-    // TODO1 mettere Array<Player>
     override fun getPlayers(): Array<Player> {
         val res = NormalPlayer.values() as Array<Player>
         return res
@@ -58,10 +56,10 @@ class NormalTablutGame(val state: State, val initialState: NormalState, val game
      * better term, but zero-sum is traditional and makes sense if you imagine each
      * player is charged an entry fee of 1/2.
      */
-    // TODO1 sistemare NormalGameRules(state).isTerminal()
-    // TODO1 hardcoded 1 and 0
-    // TODO2 patta come hash dello stato
-    override fun getUtility(state: State, player: Player): Double {// TODO1 patta
+    // TODOg sistemare NormalGameRules(state).isTerminal()
+    // TODO2 hardcoded utils
+    // TODOg patta come hash dello stato
+    override fun getUtility(state: State, player: Player): Double {
         var res: Double
 
         if(NormalGameRules(state as NormalState).isTerminal()){

@@ -1,5 +1,0 @@
-Startup server
-    cd ../TablutCompetition/TablutCompetition/Tablut/
-    ant server
-    cd ../TablutCompetition/TablutCompetition/Tablut/
-    ant randomwhite | ant randomblack

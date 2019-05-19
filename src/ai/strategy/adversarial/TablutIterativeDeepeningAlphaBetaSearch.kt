@@ -1,7 +1,6 @@
 package ai.strategy.adversarial
 
 import ai.action.Action
-import ai.heuristic.Heuristic
 import ai.heuristic.NormalTablutHeuristic
 import aima.core.search.adversarial.IterativeDeepeningAlphaBetaSearch
 import aima.core.search.framework.Metrics
