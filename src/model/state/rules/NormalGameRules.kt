@@ -8,7 +8,7 @@ import model.state.board.NormalCoordinate
 import model.state.player.NormalPlayer
 
 class NormalGameRules(val s: NormalState) : GameRules {
-    // TODOg add these?
+
     /*
     – Un giocatore non può muovere nessuna pedina in nessuna direzione: sconfitta di quel giocatore
     – Si raggiunge uno stato già raggiunto in precedenza: pareggio
@@ -83,7 +83,7 @@ class NormalGameRules(val s: NormalState) : GameRules {
         return false
     }
 
-    fun isKingCapturedLikeKnight(): Boolean{ // TODOg cattura attiva?
+    fun isKingCapturedLikeKnight(): Boolean{
         // For each black that has the king adj, look if in the same line there's another black that captures the king
         for(black in s.board.getBlackBoardCellAdjKing()){ // TODO2 ricalculated for nothing, use variable
             if(s.board.getBoardCellFromCoord(
@@ -109,7 +109,7 @@ class NormalGameRules(val s: NormalState) : GameRules {
                 return isKingInAdjCastleAndSurrounded()
             }else if(s.board.getKingBoardCell() in s.board.getCampBoardCellsAdjKing()){ // Case 3)
                 return isKingCapturedAdjCamp()
-            }else if(!s.board.getBlackBoardCellAdjKing().isEmpty()){ // Case 4 // TODOg cattura multipla?
+            }else if(!s.board.getBlackBoardCellAdjKing().isEmpty()){ // Case 4
                 return isKingCapturedLikeKnight()
             }
         }

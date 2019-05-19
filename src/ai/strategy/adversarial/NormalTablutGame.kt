@@ -56,9 +56,8 @@ class NormalTablutGame(val state: State, val initialState: NormalState, val game
      * better term, but zero-sum is traditional and makes sense if you imagine each
      * player is charged an entry fee of 1/2.
      */
-    // TODOg sistemare NormalGameRules(state).isTerminal()
     // TODO2 hardcoded utils
-    // TODOg patta come hash dello stato
+
     override fun getUtility(state: State, player: Player): Double {
         var res: Double
 
@@ -79,7 +78,7 @@ class NormalTablutGame(val state: State, val initialState: NormalState, val game
      * and false TERMINAL STATES otherwise.
      * States where the game has ended are called terminal states
      */
-    // TODO1 why these cast? Everywhere
+
     override fun isTerminal(state: State): Boolean {
         val res = NormalGameRules(state as NormalState).isTerminal()
 

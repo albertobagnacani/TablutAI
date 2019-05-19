@@ -7,7 +7,7 @@ import model.state.player.NormalPlayer
 import model.state.player.Player
 
 class BlackNormalTablutHeuristic : NormalTablutHeuristic {
-    // TODO fix
+
     override fun getValue(state: State, player: Player): Double{ // Numero di pedine mancanti allo stato attuale per catturare re
         return numberOfPawnsToCaptureKing(state as NormalState, player as NormalPlayer)
     }

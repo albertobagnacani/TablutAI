@@ -95,7 +95,7 @@ class NormalActionResolver : ActionResolver {
                         break@loop
                     }
                 }
-                CellContent.BLACK ->{ // TODOg if black stays inside a camp, the cell can be a camp (anche altri casi)
+                CellContent.BLACK ->{
                     if(cell.content == CellContent.NOTHING && (cell.type == CellType.NORMAL || cell.type == CellType.EXIT)){
                         res.add(NormalTablutAction(NormalCoordinate(bc.coordinate).returnCell(), NormalCoordinate(i, bc.coordinate.y).returnCell(), if(state.player==NormalPlayer.WHITE) "WHITE" else "BLACK"))
                     }else{

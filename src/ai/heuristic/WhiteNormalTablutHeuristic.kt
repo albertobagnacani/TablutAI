@@ -11,7 +11,7 @@ import kotlin.math.pow
 import kotlin.math.sqrt
 
 class WhiteNormalTablutHeuristic : NormalTablutHeuristic {
-    // TODO fix
+
     override fun getValue(state: State, player: Player): Double { // Distanza dalle azzurre
         return distanceFromNearestExit(state as NormalState, player as NormalPlayer)
     }
