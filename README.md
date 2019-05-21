@@ -4,7 +4,7 @@ AI's course game competition.
 With the term "normal", in the code, we refer to the Tablut version presented in class.
 
 ## Usage
-The jar is located inside the directory "Tablut/out/artifacts/Tablut_jar"
+The jar is located inside the directory "jar/Tablut_jar"
 
 Create a folder in the same path of the jar called "resources". 
 Put then inside the two config files (located in folder "resources", at the same level of "src"): 
