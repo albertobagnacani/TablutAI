@@ -9,8 +9,8 @@ data class NormalBoard<out T>(override val rows: Int, override val cols: Int, va
 
     init{
         initializeCoords()
-        initializeType()
-        initializeContent()
+        initializeTypeNoFile()
+        initializeContentNoFile()
     }
 
     fun initializeCoords(){
@@ -18,6 +18,60 @@ data class NormalBoard<out T>(override val rows: Int, override val cols: Int, va
             for(j in 0..cols-1){
                 board[i][j] = NormalBoardCell(NormalCoordinate(i, j), CellType.NORMAL, CellContent.WHITE)
             }
+        }
+    }
+
+    fun initializeTypeNoFile(){
+        var r = 0
+        var c: Int
+        val type = "N E E C C C E E N\n" +
+                "E N N N C N N N E\n" +
+                "E N N N N N N N E\n" +
+                "C N N N N N N N C\n" +
+                "C C N N K N N C C\n" +
+                "C N N N N N N N C\n" +
+                "E N N N N N N N E\n" +
+                "E N N N C N N N E\n" +
+                "N E E C C C E E N"
+        type.split("\n").forEach{ item ->
+            c = 0
+            item.split(" ").forEach {
+                when (it) {
+                    "N" -> board[r][c].type = CellType.NORMAL
+                    "E" -> board[r][c].type = CellType.EXIT
+                    "C" -> board[r][c].type = CellType.CAMP
+                    "K" -> board[r][c].type = CellType.CASTLE
+                }
+                c++
+            }
+            r++
+        }
+    }
+
+    fun initializeContentNoFile(){
+        var r = 0
+        var c: Int
+        val content = "N N N B B B N N N\n" +
+                "N N N N B N N N N\n" +
+                "N N N N W N N N N\n" +
+                "B N N N W N N N B\n" +
+                "B B W W K W W B B\n" +
+                "B N N N W N N N B\n" +
+                "N N N N W N N N N\n" +
+                "N N N N B N N N N\n" +
+                "N N N B B B N N N"
+        content.split("\n").forEach{ item ->
+            c = 0
+            item.split(" ").forEach {
+                when (it) {
+                    "N" -> board[r][c].content = CellContent.NOTHING
+                    "W" -> board[r][c].content = CellContent.WHITE
+                    "B" -> board[r][c].content = CellContent.BLACK
+                    "K" -> board[r][c].content = CellContent.KING
+                }
+                c++
+            }
+            r++
         }
     }
 
