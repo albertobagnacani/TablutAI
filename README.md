@@ -2,6 +2,7 @@
 Competition project of the Artificial Intelligence Fundamentals course at University of Bologna.
 
 TablutAI is a formal and knowledge based AI. It mainly uses an iterative deepening alpha beta search ([Russell-Norvig](http://aima.cs.berkeley.edu/)).
+
 ![Board](/utils/boardNoPawns.png)
 ## Getting Started
 ### Server
