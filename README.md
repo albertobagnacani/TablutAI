@@ -1,22 +1,19 @@
 # Tablut
-AI's course game competition.
+Competition project of the Artificial Intelligence Fundamentals course at University of Bologna.
 
-With the term "normal", in the code, we refer to the Tablut version presented in class.
+TablutAI is a formal and knowledge based AI. It mainly uses an iterative deepening alpha beta search ([Russell-Norvig](http://aima.cs.berkeley.edu/)).
 
-## Usage
-The jar is located inside the directory "jar/Tablut_jar"
+![Board](/utils/boardNoPawns.png)
+## Getting Started
+### Server
+First, you need the game server available [here](https://github.com/AGalassi/TablutCompetition).
+### Install
+Clone the project:
+git clone https://github.com/albertobagnacani/TablutAI.git
+### Usage
+Open a new terminal in the root project folder. A ready-to-use fat jar is located in the directory "jar/Tablut_jar": navigate to it.
 
-Create a folder in the same path of the jar called "resources". 
-Put then inside the two config files (located in folder "resources", at the same level of "src"): 
-"normalBoardType.txt" and "normalBoardContent.txt".
-Do these operations if files are not already present.
-
-Execute with: java -jar Tablut.jar (Player [White|Black]) (Seconds)
-
+Execute with: java -jar Tablut.jar <Player (White|Black)> <Seconds>
 #### Examples
 Example: java -jar Tablut.jar White 60
-
 Example: java -jar Tablut.jar Black 60
-
-#### Example of the resources folder
-![alt text](resourceExample.png)
